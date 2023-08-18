@@ -1,0 +1,18 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends "base.html" %}
+{% block title %}
+漢字登録 - {{ super() }}
+{% endblock %}
+{% block content %}
+<h1>漢字登録画面</h1>
+<div class="row">
+    <form method="POST">
+        {{ form.csrf_token }}
+        {{ render_field(form.kanji) }}
+        {{ render_field(form.readings) }}
+        {{ render_field(form.hints) }}
+        {{ render_field(form.sp_char, checked=False) }}
+        {{ form.submit() }}
+    </form>
+</div>
+{% endblock %}

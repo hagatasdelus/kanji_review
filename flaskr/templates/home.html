@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}
+ホーム - {{ super() }}
+{% endblock %}
+{% block content %}
+{% for message in get_flashed_messages() %}
+{{ message }}
+{% endfor %}
+<div class="row">
+    <a>メインページです</a>
+</div>
+{% endblock %}
+        
