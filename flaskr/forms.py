@@ -9,7 +9,7 @@ from flask import flash
 class RegisterKanjiForm(FlaskForm):
     kanji = StringField('漢字: ', validators=[DataRequired()])
     readings = StringField('読み: ', validators=[DataRequired()])
-    hints = SelectField('ヒント: ', choices=[('nothing', 'なし'), ('creature', '生物'), ('persons_name', '人名'), ('plant', '植物'),('Places and Buildings', '地名・建造物')])
+    hints = SelectField(label='ヒント: ', choices=[('nothing', 'なし'), ('生物', '生物'), ('人名', '人名'), ('植物', '植物'),('地名・建造物', '地名・建造物')])
     sp_char = BooleanField('文字数特殊?:')
     submit = SubmitField('登録')
 

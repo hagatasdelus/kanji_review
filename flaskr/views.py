@@ -9,39 +9,44 @@ from flaskr.models import (
     Kanji, transaction
 )
 from flaskr import db
-import random
 
 bp = Blueprint('app', __name__, url_prefix='')
 
-# @bp.route('/')
-# def home():
-#     return render_template('home.html')
-
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/')
 def home():
+    return render_template('home.html')
+
+@bp.route('/question', methods=['GET', 'POST'])
+def question():
     form = AnswerForm()
     kanji = Kanji.get_kanji()
+    if not kanji:
+        flash('漢字が見つかりませんでした')
+        return redirect(url_for('app.home'))
     if form.validate_on_submit():
-        if form.readings.data == kanji.readings:
+        if form.readings.data == session.get('readings'):
             flash('正解', 'success')
-            return redirect(url_for('app.home'))
+            return redirect(url_for('app.question'))
         else:
             flash('不正解', 'danger')
-            return redirect(url_for('app.retry', id=kanji.id))
-    return render_template('home.html', form=form, kanji=kanji)
+            return redirect(url_for('app.retry'))
+    session['kanji_id'] = kanji.id
+    session['readings'] = kanji.readings
+    return render_template('question.html', form=form, kanji=kanji)
 
-@bp.route('/<int:id>', methods=['GET', 'POST'])
-def retry(id):
+@bp.route('/question/retry', methods=['GET', 'POST'])
+def retry():
     form = AnswerForm()
-    kanji = Kanji.select_kanji_by_id(id)
+    kanji_id = session.get('kanji_id')
+    kanji = Kanji.select_kanji_by_id(kanji_id)
     if form.validate_on_submit():
         if form.readings.data == kanji.readings:
             flash('正解', 'success')
-            return redirect(url_for('app.home'))
+            return redirect(url_for('app.question'))
         else:
             flash('不正解', 'danger')
-            return redirect(url_for('app.retry', id=kanji.id))
-    return render_template('home.html', form=form, kanji=kanji)
+            return redirect(url_for('app.retry'))
+    return render_template('question.html', form=form, kanji=kanji)
 
 # @bp.route('/question', methods=['GET', 'POST'])
 # def question():
