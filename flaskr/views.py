@@ -3,7 +3,7 @@ from flask import (
     session, flash
 )
 from flaskr.forms import (
-    RegisterKanjiForm
+    RegisterKanjiForm, AnswerForm
 )
 from flaskr.models import (
     Kanji, transaction
@@ -13,31 +13,63 @@ import random
 
 bp = Blueprint('app', __name__, url_prefix='')
 
-@bp.route('/')
+# @bp.route('/')
+# def home():
+#     return render_template('home.html')
+
+@bp.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    form = AnswerForm()
+    kanji = Kanji.get_kanji()
+    if form.validate_on_submit():
+        if form.readings.data == kanji.readings:
+            flash('正解', 'success')
+            return redirect(url_for('app.home'))
+        else:
+            flash('不正解', 'danger')
+            return redirect(url_for('app.retry', id=kanji.id))
+    return render_template('home.html', form=form, kanji=kanji)
 
-@bp.route('/question')
-def question():
-    kanji_list = Kanji.query.all() # Kanjiテーブルから全レコードを取得する
-    # if kanji_list:
-    #     flash('リストが見つかりませんでした')
-    #     return redirect(url_for('app.home'))
-    kanji = random.choice(kanji_list) # ランダムに一つ選ぶ
-    session['kanji_id'] = kanji.id # セッションに選んだ漢字のIDを保存する
-    return render_template('kanji_question.html', kanji=kanji) # index.htmlに漢字とヒントを渡す
+@bp.route('/<int:id>', methods=['GET', 'POST'])
+def retry(id):
+    form = AnswerForm()
+    kanji = Kanji.select_kanji_by_id(id)
+    if form.validate_on_submit():
+        if form.readings.data == kanji.readings:
+            flash('正解', 'success')
+            return redirect(url_for('app.home'))
+        else:
+            flash('不正解', 'danger')
+            return redirect(url_for('app.retry', id=kanji.id))
+    return render_template('home.html', form=form, kanji=kanji)
 
-@bp.route('/check', methods=['POST'])
-def check():
-    answer = request.form['answer'] # フォームから入力された読み方を取得する
-    kanji_id = session.get('kanji_id') # セッションから漢字のIDを取得する
-    if kanji_id is None: # セッションがない場合はトップページにリダイレクトする
-        return redirect(url_for('app.home'))
-    kanji = Kanji.query.get(kanji_id) # KanjiテーブルからIDでレコードを検索する
-    if answer == kanji.readings: # 入力された読み方と正解が一致した場合
-        return render_template('correct.html', kanji=kanji) # correct.htmlに漢字と正解を渡す
-    else: # 入力された読み方と正解が一致しなかった場合
-        return render_template('kanji_question.html', kanji=kanji, error='不正解') # index.htmlに漢字とヒントとエラーメッセージを渡す
+# @bp.route('/question', methods=['GET', 'POST'])
+# def question():
+#     kanji = Kanji.get_kanji()
+#     form = AnswerForm(request.form)
+#     if request.method == 'POST' and form.validate():
+#         if kanji.readings == form.readings.data:
+#             return redirect(url_for('app.check', kanji_id=kanji.id))
+#     # kanji_list = Kanji.query.all() # Kanjiテーブルから全レコードを取得する
+#     # if kanji_list:
+#     #     flash('リストが見つかりませんでした')
+#     #     return redirect(url_for('app.home'))
+#     # kanji = random.choice(kanji_list) # ランダムに一つ選ぶ
+#     session['kanji_id'] = kanji.id # セッションに選んだ漢字のIDを保存する
+#     session['kanji'] = form.readings.data
+#     return render_template('kanji_question.html', kanji=kanji, form=form) # index.htmlに漢字とヒントを渡す
+
+# @bp.route('/check/<id>', methods=['GET', 'POST'])
+# def check(kanji_id):
+#     # kanji_id = session.get('kanji_id') # セッションから漢字のIDを取得する
+#     answer = session.get('kanji')
+#     if not kanji_id: # セッションがない場合はトップページにリダイレクトする
+#         return redirect(url_for('app.question'))
+#     kanji = Kanji.select_kanji_by_id(kanji_id) # KanjiテーブルからIDでレコードを検索する
+#     if answer == kanji.readings: # 入力された読み方と正解が一致した場合
+#         return render_template('correct.html', kanji=kanji) # correct.htmlに漢字と正解を渡す
+#     else: # 入力された読み方と正解が一致しなかった場合
+#         return render_template('kanji_question.html', kanji=kanji, error='不正解') # index.htmlに漢字とヒントとエラーメッセージを渡す
     
 @bp.route('register_kanji', methods=['GET', 'POST'])
 def register_kanji():
@@ -54,7 +86,7 @@ def register_kanji():
             with transaction():
                 kanjis.create_new_book()
             flash('kanji registration has been completed')
-        return redirect(url_for('app.home'))
+        return redirect(url_for('app.register_kanji'))
     return render_template('kanji_register.html', form=form)
 
 @bp.app_errorhandler(404) #ページが間違うとmain

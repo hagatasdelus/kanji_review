@@ -17,3 +17,9 @@ class RegisterKanjiForm(FlaskForm):
         if len(field.data) > 20:
             raise ValidationError('読みが長すぎます')
 
+class AnswerForm(FlaskForm):
+    readings = StringField()
+    submit = SubmitField('答える')
+
+class CheckForm(FlaskForm):
+    submit = SubmitField('次の問題へ')

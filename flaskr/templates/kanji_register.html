@@ -5,6 +5,9 @@
 {% endblock %}
 {% block content %}
 <h1>漢字登録画面</h1>
+{% for message in get_flashed_messages() %}
+{{ message }}
+{% endfor %}
 <div class="row">
     <form method="POST">
         {{ form.csrf_token }}
