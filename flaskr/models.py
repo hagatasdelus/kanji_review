@@ -36,9 +36,11 @@ class Kanji(db.Model):
         return cls.query.order_by(
             func.random()
         ).first()
-        
     
     @classmethod
     def select_kanji_by_id(cls, id):
         return cls.query.get(id)
     
+    @classmethod
+    def select_kanji_info_by_kanji(cls, kanji):
+        return cls.query.filter_by(kanji=kanji).first()

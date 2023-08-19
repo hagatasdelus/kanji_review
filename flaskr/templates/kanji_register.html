@@ -9,7 +9,7 @@
 {{ message }}
 {% endfor %}
 <div class="row">
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         {{ form.csrf_token }}
         {{ render_field(form.kanji) }}
         {{ render_field(form.readings) }}

@@ -21,7 +21,7 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <form method="POST" action="">
+    <form method="POST" action="" autocomplete="off">
         {{ form.csrf_token }}
         {{ form.hidden_tag() }}
         <p style="font-size: 100px;">{{ kanji.kanji }}</p>

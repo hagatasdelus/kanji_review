@@ -4,7 +4,7 @@ from wtforms.fields import (
 )
 from wtforms import ValidationError
 from wtforms.validators import DataRequired 
-from flask import flash
+from flaskr.models import Kanji
 
 class RegisterKanjiForm(FlaskForm):
     kanji = StringField('漢字: ', validators=[DataRequired()])
@@ -13,6 +13,10 @@ class RegisterKanjiForm(FlaskForm):
     sp_char = BooleanField('文字数特殊?:')
     submit = SubmitField('登録')
 
+    def validate_kanji(self, field):
+        if Kanji.select_kanji_info_by_kanji(field.data):
+            raise ValidationError('その漢字はすでに登録されています')
+        
     def validate_readings(self, field):
         if len(field.data) > 20:
             raise ValidationError('読みが長すぎます')
@@ -20,6 +24,3 @@ class RegisterKanjiForm(FlaskForm):
 class AnswerForm(FlaskForm):
     readings = StringField()
     submit = SubmitField('答える')
-
-class CheckForm(FlaskForm):
-    submit = SubmitField('次の問題へ')
