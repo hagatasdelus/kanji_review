@@ -3,10 +3,10 @@
     align-items: stretch;
     max-width: 100%;
 }
-#regist {
+.regist {
     margin-left: 100px;
 }
-#delete {
+.delete {
     margin-top: 50px;
     margin-left: 50px;
 }

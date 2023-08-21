@@ -4,8 +4,8 @@
 漢字削除 - {{ super() }}
 {% endblock %}
 {% block content %}
-<h2>漢字削除</h2>
-<div class="row">
+<div class="regist">
+    <h2>漢字削除</h2>
     <form method="post" autocomplete="off">
         {{ form.csrf_token }}
         {{ render_field(form.kanji) }}

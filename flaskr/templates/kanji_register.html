@@ -4,7 +4,7 @@
 漢字登録 - {{ super() }}
 {% endblock %}
 {% block content %}
-<div id="regist">
+<div class="regist">
     <h1>漢字登録画面</h1>
     {% for message in get_flashed_messages() %}
     {{ message }}
@@ -18,7 +18,7 @@
         {{ form.submit() }}
     </form>
 </div>
-<div id="delete">
+<div class="delete">
     <a href="{{url_for('app.kanji_delete')}}">
         漢字削除はこちら
     </a>
