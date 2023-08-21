@@ -30,8 +30,7 @@
             <p id="hints">{{ kanji.hints }}</p>
             {% endif %}
             <p class="answer">
-                {{ form.readings }}<br>
-                {{ form.submit }}
+                {{ form.readings(autofocus=True) }}<br>
             </p>
             {% if kanji.sp_char %}
             <p id="special">文字数・読み特殊</p>

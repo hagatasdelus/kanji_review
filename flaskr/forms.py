@@ -23,7 +23,6 @@ class RegisterKanjiForm(FlaskForm):
 
 class AnswerForm(FlaskForm):
     readings = StringField()
-    submit = SubmitField('答える')
 
 class DeleteForm(FlaskForm):
     kanji = StringField('漢字: ', validators=[DataRequired()])
