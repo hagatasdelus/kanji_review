@@ -27,12 +27,16 @@
     /* justify-content: center; */
     text-align: center;
 }
-#hints, #special {
+#hints, #blds, #special {
     font-size: 30px;
     writing-mode: vertical-rl;
 }
 #hints {
-    margin-top: 80px;
+    margin-top: 90px;
+    justify-content: left;
+}
+#blds {
+    margin-top: 27px;
     justify-content: left;
 }
 #special {
@@ -41,7 +45,7 @@
 .answer {
     justify-content: center;
     align-items: center;
-    margin-top: 60px;
+    margin-top: 70px;
 }
 .answer {
     margin-left: 100px;;

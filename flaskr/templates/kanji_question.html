@@ -22,17 +22,19 @@
         {{ form.hidden_tag() }}
         <p id="kanji">{{ kanji.kanji }}</p>
         <div class="container1">
-            {% if kanji.hints != 'nothing' %}
-            <p id="hints">{{ kanji.hints }}</p>
-            {% else %}
+            {% if kanji.hints == 'nothing' %}
             <p id="blank"></p>
+            {% elif kanji.hints == '地名・建造物' %}
+            <p id="blds">{{ kanji.hints }}</p>
+            {% else %}
+            <p id="hints">{{ kanji.hints }}</p>
             {% endif %}
             <p class="answer">
                 {{ form.readings }}<br>
                 {{ form.submit }}
             </p>
             {% if kanji.sp_char %}
-            <p id="special">文字数･読み特殊</p>
+            <p id="special">文字数・読み特殊</p>
             {% else %}
             <p id="blank"></p>
             {% endif %}
