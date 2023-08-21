@@ -1,0 +1,15 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends "base.html" %}
+{% block title %}
+漢字削除 - {{ super() }}
+{% endblock %}
+{% block content %}
+<h2>漢字削除</h2>
+<div class="row">
+    <form method="post" autocomplete="off">
+        {{ form.csrf_token }}
+        {{ render_field(form.kanji) }}
+        {{ form.submit }}
+    </form>
+</div>
+{% endblock %}

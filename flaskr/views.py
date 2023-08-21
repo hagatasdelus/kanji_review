@@ -3,12 +3,11 @@ from flask import (
     session, flash
 )
 from flaskr.forms import (
-    RegisterKanjiForm, AnswerForm
+    RegisterKanjiForm, AnswerForm, DeleteForm
 )
 from flaskr.models import (
     Kanji, transaction
 )
-from flaskr import db
 
 bp = Blueprint('app', __name__, url_prefix='')
 
@@ -66,7 +65,17 @@ def register_kanji():
         return redirect(url_for('app.register_kanji'))
     return render_template('kanji_register.html', form=form)
 
-@bp.app_errorhandler(404) #ページが間違うとmain
+@bp.route('/kanji_delete', methods=['GET', 'POST'])
+def kanji_delete():
+    form = DeleteForm(request.form)
+    if request.method == 'POST' and form.validate():
+        with transaction():
+            Kanji.delete_kanji(form.kanji.data)
+        flash(f'{form.kanji.data}を削除しました')
+        return redirect(url_for('app.register_kanji'))
+    return render_template('kanji_delete.html', form=form)
+
+@bp.app_errorhandler(404)
 def redirect_main_page(e):
     return redirect(url_for('app.home'))
 

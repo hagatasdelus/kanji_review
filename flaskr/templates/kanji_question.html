@@ -4,35 +4,39 @@
 漢字問題 - {{ super() }}
 {% endblock %}
 {% block content %}
-<style>
-    input, button {
-        width: 300px;
-        height: 50px;
-        padding: 10px;
-    }
-</style>
-<div align="center">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+<div class="wrap">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-                <div style="color: red; font-size: 30px;" class="{{ category }}">
+                <div class="{{ category }}">
                     {{ message }}
                 </div>
             {% endfor %}
+        {% else %}
+        <div id="category-blank"></div>
         {% endif %}
     {% endwith %}
     <form method="POST" action="" autocomplete="off">
         {{ form.csrf_token }}
         {{ form.hidden_tag() }}
-        <p style="font-size: 100px;">{{ kanji.kanji }}</p>
-        {% if kanji.hints != 'nothing' %}
-        <p style="font-size: 25px;">{{ kanji.hints }}</p>
-        {% endif %}
-        {% if kanji.sp_char %}
-        <p style="font-size: 25px;">文字数特殊</p>
-        {% endif %}
-        {{ form.readings }}<br>
-        {{ form.submit }}
+        <p id="kanji">{{ kanji.kanji }}</p>
+        <div class="container1">
+            {% if kanji.hints != 'nothing' %}
+            <p id="hints">{{ kanji.hints }}</p>
+            {% else %}
+            <p id="blank"></p>
+            {% endif %}
+            <p class="answer">
+                {{ form.readings }}<br>
+                {{ form.submit }}
+            </p>
+            {% if kanji.sp_char %}
+            <p id="special">文字数･読み特殊</p>
+            {% else %}
+            <p id="blank"></p>
+            {% endif %}
+        </div>
     </form>
 </div>
 {% endblock %}

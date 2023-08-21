@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    align-items: stretch;
+    max-width: 100%;
+}
+#regist {
+    margin-left: 100px;
+}
+#delete {
+    margin-top: 50px;
+    margin-left: 50px;
+}

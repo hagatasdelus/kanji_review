@@ -44,3 +44,7 @@ class Kanji(db.Model):
     @classmethod
     def select_kanji_info_by_kanji(cls, kanji):
         return cls.query.filter_by(kanji=kanji).first()
+    
+    @classmethod
+    def delete_kanji(cls, kanji):
+        cls.query.filter_by(kanji=kanji).delete()

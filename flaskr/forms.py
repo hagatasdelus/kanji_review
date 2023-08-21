@@ -10,7 +10,7 @@ class RegisterKanjiForm(FlaskForm):
     kanji = StringField('漢字: ', validators=[DataRequired()])
     readings = StringField('読み: ', validators=[DataRequired()])
     hints = SelectField(label='ヒント: ', choices=[('nothing', 'なし'), ('生物', '生物'), ('人名', '人名'), ('植物', '植物'),('地名・建造物', '地名・建造物')])
-    sp_char = BooleanField('文字数特殊?:')
+    sp_char = BooleanField('文字数･読み特殊?:')
     submit = SubmitField('登録')
 
     def validate_kanji(self, field):
@@ -24,3 +24,11 @@ class RegisterKanjiForm(FlaskForm):
 class AnswerForm(FlaskForm):
     readings = StringField()
     submit = SubmitField('答える')
+
+class DeleteForm(FlaskForm):
+    kanji = StringField('漢字: ', validators=[DataRequired()])
+    submit = SubmitField('削除')
+
+    def validate_kanji(self, field):
+        if not Kanji.select_kanji_info_by_kanji(field.data):
+            raise ValidationError('その漢字は登録されていません')
