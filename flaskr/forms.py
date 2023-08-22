@@ -31,3 +31,11 @@ class DeleteForm(FlaskForm):
     def validate_kanji(self, field):
         if not Kanji.select_kanji_info_by_kanji(field.data):
             raise ValidationError('その漢字は登録されていません')
+
+class SearchForm(FlaskForm):
+    kanji = StringField('漢字: ', validators=[DataRequired()])
+    submit = SubmitField('検索')
+
+    def validate_kanji(self, field):
+        if not Kanji.select_kanji_info_by_kanji(field.data):
+            raise ValidationError('その漢字は見つかりませんでした')

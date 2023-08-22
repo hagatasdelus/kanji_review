@@ -3,7 +3,7 @@ from flask import (
     session, flash
 )
 from flaskr.forms import (
-    RegisterKanjiForm, AnswerForm, DeleteForm
+    RegisterKanjiForm, AnswerForm, DeleteForm, SearchForm
 )
 from flaskr.models import (
     Kanji, transaction
@@ -75,10 +75,13 @@ def kanji_delete():
         return redirect(url_for('app.register_kanji'))
     return render_template('kanji_delete.html', form=form)
 
+@bp.route('/search_kanji', methods=['GET'])
+def search_kanji():
+    form = SearchForm(request.form)
+    kanji = request.args.get('kanji', None, type=str)
+    kanji_info = Kanji.select_kanji_info_by_kanji(kanji)
+    return render_template('search_kanji.html', form=form, kanji=kanji_info)
+
 @bp.app_errorhandler(404)
 def redirect_main_page(e):
     return redirect(url_for('app.home'))
-
-@bp.app_errorhandler(500)
-def server_error(e):
-    return render_template('500.html'), 500
