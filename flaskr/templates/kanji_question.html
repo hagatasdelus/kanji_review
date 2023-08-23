@@ -17,7 +17,7 @@
         <div id="category-blank"></div>
         {% endif %}
     {% endwith %}
-    <form method="POST" action="" autocomplete="off">
+    <form method="POST" action="">
         {{ form.csrf_token }}
         {{ form.hidden_tag() }}
         <p id="kanji">{{ kanji.kanji }}</p>
@@ -30,7 +30,7 @@
             <p id="hints">{{ kanji.hints }}</p>
             {% endif %}
             <p class="answer">
-                {{ form.readings(autofocus=True) }}<br>
+                {{ form.readings(autofocus=True, autocomplete="off") }}<br>
             </p>
             {% if kanji.sp_char %}
             <p id="special">文字数・読み特殊</p>
