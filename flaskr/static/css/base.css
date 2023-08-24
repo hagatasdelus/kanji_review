@@ -10,3 +10,10 @@
     margin-top: 50px;
     margin-left: 50px;
 }
+.navbar {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 10000;
+}
+
