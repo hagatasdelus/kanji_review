@@ -1,6 +1,6 @@
 from flask import (
     request, render_template, redirect, url_for, Blueprint,
-    session, flash
+    session, flash, jsonify
 )
 from flaskr.forms import (
     RegisterKanjiForm, AnswerForm, DeleteForm, SearchForm
@@ -8,6 +8,7 @@ from flaskr.forms import (
 from flaskr.models import (
     Kanji, transaction
 )
+from flaskr.utils.answer_formats import make_answer_format
 
 bp = Blueprint('app', __name__, url_prefix='')
 
@@ -81,6 +82,12 @@ def search_kanji():
     kanji = request.args.get('kanji', None, type=str)
     kanji_info = Kanji.select_kanji_info_by_kanji(kanji)
     return render_template('search_kanji.html', form=form, kanji=kanji_info)
+
+@bp.route('/post_ajax', methods=['GET'])
+def post_ajax():
+    kanji_id = request.args.get('kanji_id', -1, type=int)
+    kanji = Kanji.select_kanji_by_id(kanji_id)
+    return jsonify(data=make_post_format(not_read_posts))
 
 @bp.app_errorhandler(404)
 def redirect_main_page(e):

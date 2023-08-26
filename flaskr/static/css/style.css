@@ -1,66 +1,68 @@
 .wrap {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
 }
-.success, .danger {
-    text-align: center; 
-    order: -1;
-    color: red;
-    font-size: 30px;
+.success,
+.danger {
+  text-align: center;
+  order: -1;
+  color: red;
+  font-size: 30px;
 }
 #category-blank {
-    margin: 22.3px;
-    margin-left: 100%;
-    margin-right: 100%;
+  margin: 22.3px;
+  margin-left: 100%;
+  margin-right: 100%;
 }
 .container1 {
-    display: flex;
-    align-items: stretch;
-    max-width: 100%;
-    justify-content: center;
+  display: flex;
+  align-items: stretch;
+  max-width: 100%;
+  justify-content: center;
 }
 #kanji {
-    font-family: serif;
-    font-size: 110px;
-    text-align: center;
+  font-family: serif;
+  font-size: 110px;
+  text-align: center;
 }
-#hints, #blds, #special {
-    font-size: 30px;
-    writing-mode: vertical-rl;
+#hints,
+#blds,
+#special {
+  font-size: 30px;
+  writing-mode: vertical-rl;
 }
 #hints {
-    margin-top: 64px;
-    justify-content: left;
+  margin-top: 64px;
+  justify-content: left;
 }
 #blds {
-    margin-top: 2px;
-    justify-content: left;
+  margin-top: 2px;
+  justify-content: left;
 }
 #special {
-    justify-content: right;
+  justify-content: right;
 }
-.answer {
-    justify-content: center;
-    align-items: center;
-    margin-top: 70px;
+#answer {
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
 }
-.answer {
-    margin-left: 100px;;
-    margin-right: 100px;;
+#answer {
+  margin-left: 100px;
+  margin-right: 100px;
 }
 @media screen and (max-width: 928px) {
-    .answer {
-        margin-left: 20px;;
-        margin-right: 20px;;
-    }
+  #answer {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 }
 #blank {
-    margin: 52.5px;
+  margin: 52.5px;
 }
 input {
-    width: 300px;
-    height: 50px;
+  width: 300px;
+  height: 50px;
 }
-
