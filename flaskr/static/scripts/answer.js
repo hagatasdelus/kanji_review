@@ -1,5 +1,5 @@
 $(function () {
-  timer = setInterval("get_answer()", 20000);
+  timer = setTimeout("get_answer()", 5000);
 });
 
 function get_answer() {
