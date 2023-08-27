@@ -1,8 +1,10 @@
 $(function () {
-  timer = setInterval("get_answer()", 1000);
+  timer = setTimeout("get_answer()", 20000);
 });
 
 function get_answer() {
+  let scroll = (document.scrollingElement || document.body);
+  scroll.scrollTop = scroll.scrollHeight;
   $.getJSON(
     "answer_ajax",
     {

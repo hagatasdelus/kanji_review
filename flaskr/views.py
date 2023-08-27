@@ -38,7 +38,7 @@ def question():
     session['readings'] = kanji.readings
     return render_template('kanji_question.html', form=form, kanji=kanji)
 
-@bp.route('/question/retry', methods=['GET', 'POST'])
+@bp.route('/retry', methods=['GET', 'POST']) #question/retry
 def retry():
     form = AnswerForm()
     kanji_id = session.get('kanji_id')
@@ -89,6 +89,13 @@ def search_kanji():
 
 @bp.route('/answer_ajax', methods=['GET'])
 def answer_ajax():
+    kanji_id = request.args.get('kanji_id', -1, type=int)
+    print(GREEN + f'kanji_id: {kanji_id}' + END)
+    kanji = Kanji.select_kanji_by_id(kanji_id)
+    return jsonify(data=make_answer_format(kanji))
+
+@bp.route('/answer_retry_ajax', methods=['GET'])
+def answer_retry_ajax():
     kanji_id = request.args.get('kanji_id', -1, type=int)
     print(GREEN + f'kanji_id: {kanji_id}' + END)
     kanji = Kanji.select_kanji_by_id(kanji_id)

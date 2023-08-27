@@ -1,9 +1,9 @@
 $(function () {
-    timer = setInterval("get_answer()", 1000);
+    timer = setTimeout("get_answer_retry()", 20000);
 });  
-function get_answer() {
+function get_answer_retry() {
     $.getJSON(
-      "answer_ajax", {
+      "answer_retry_ajax", {
         kanji_id: kanji_id,
       },
       function (data) {
