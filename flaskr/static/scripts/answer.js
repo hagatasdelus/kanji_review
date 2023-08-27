@@ -1,5 +1,5 @@
 $(function () {
-  timer = setTimeout("get_answer()", 5000);
+  timer = setInterval("get_answer()", 1000);
 });
 
 function get_answer() {
@@ -9,7 +9,7 @@ function get_answer() {
       kanji_id: kanji_id,
     },
     function (data) {
-      $("#kanji").after(data["data"]);
+      $("#kanji").before(data["data"]);
     }
   );
 }

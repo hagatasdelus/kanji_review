@@ -8,7 +8,7 @@
 <script>
   let kanji_id = "{{ kanji.id }}";
 </script>
-<script src="{{url_for('static', filename='scripts/answer.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/answer-retry.js')}}"></script>
 <div class="wrap">
   {% with messages = get_flashed_messages(with_categories=true) %} {% if
   messages %} {% for category, message in messages %}
