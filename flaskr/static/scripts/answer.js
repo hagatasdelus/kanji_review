@@ -1,8 +1,9 @@
 $(function () {
-  setTimeout("get_answer()", 5000);
+  setTimeout("get_answer()", 8000);
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
-  readingBlankEl.className = 'reading_blank';
+  // readingBlankEl.className = 'reading_blank';
+  readingBlankEl.id = 'reading_blank';
   idKanji.parentNode.insertBefore(readingBlankEl, idKanji);
 });
 function get_answer() {
@@ -12,7 +13,7 @@ function get_answer() {
       kanji_id: kanji_id,
     },
     function (data) {
-      $('.reading_blank').hide();
+      $('#reading_blank').hide();
       $("#kanji").before(data["data"]);
     }
   );

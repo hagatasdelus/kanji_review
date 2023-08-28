@@ -12,10 +12,6 @@ from flaskr.utils.answer_formats import make_answer_format
 
 bp = Blueprint('app', __name__, url_prefix='')
 
-
-GREEN = '\033[92m'
-END =  '\033[0m'
-
 @bp.route('/')
 def home():
     return render_template('home.html')
@@ -90,7 +86,6 @@ def search_kanji():
 @bp.route('/answer_ajax', methods=['GET'])
 def answer_ajax():
     kanji_id = request.args.get('kanji_id', -1, type=int)
-    print(GREEN + f'kanji_id: {kanji_id}' + END)
     kanji = Kanji.select_kanji_by_id(kanji_id)
     return jsonify(data=make_answer_format(kanji))
 
