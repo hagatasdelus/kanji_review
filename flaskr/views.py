@@ -50,7 +50,7 @@ def retry():
         else:
             flash('不正解', 'danger')
             return redirect(url_for('app.retry'))
-    return render_template('kanji_question_retry.html', form=form, kanji=kanji)
+    return render_template('kanji_question.html', form=form, kanji=kanji)
 
 @bp.route('register_kanji', methods=['GET', 'POST'])
 def register_kanji():
@@ -89,13 +89,6 @@ def search_kanji():
 
 @bp.route('/answer_ajax', methods=['GET'])
 def answer_ajax():
-    kanji_id = request.args.get('kanji_id', -1, type=int)
-    print(GREEN + f'kanji_id: {kanji_id}' + END)
-    kanji = Kanji.select_kanji_by_id(kanji_id)
-    return jsonify(data=make_answer_format(kanji))
-
-@bp.route('/answer_retry_ajax', methods=['GET'])
-def answer_retry_ajax():
     kanji_id = request.args.get('kanji_id', -1, type=int)
     print(GREEN + f'kanji_id: {kanji_id}' + END)
     kanji = Kanji.select_kanji_by_id(kanji_id)
