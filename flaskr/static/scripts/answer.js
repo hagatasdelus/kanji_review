@@ -2,7 +2,6 @@ $(function () {
   setTimeout("get_answer()", 8000);
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
-  // readingBlankEl.className = 'reading_blank';
   readingBlankEl.id = 'reading_blank';
   idKanji.parentNode.insertBefore(readingBlankEl, idKanji);
 });
