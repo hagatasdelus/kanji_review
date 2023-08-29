@@ -3,14 +3,25 @@
   flex-direction: column;
   width: 100%;
   justify-content: space-between;
+  position: relative;
 }
 .success,
 .danger {
   text-align: center;
   order: -1;
-  color: red;
+  color: rgb(213, 0, 0);
   font-size: 30px;
 }
+img {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 173px;
+}
+
 #category-blank {
   margin: 22.3px;
   margin-left: 100%;
@@ -29,14 +40,18 @@
   margin-bottom: 45px; /* 45pxで丁度だった*/
 }
 #reading p {
+  position: relative;
   margin-top: 0px;
   margin-bottom: 0;
   transform: translateY(20px);
+  z-index: 2;
 }
 #kanji {
+  position: relative;
   font-family: serif;
   font-size: 110px;
   text-align: center;
+  z-index: 2;
 }
 #hints,
 #blds,

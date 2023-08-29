@@ -89,6 +89,11 @@ def answer_ajax():
     kanji = Kanji.select_kanji_by_id(kanji_id)
     return jsonify(data=make_answer_format(kanji))
 
+# @bp.route('/setting', methods=['GET', 'POST'])
+# def setting():
+#     form =
+#     return render_template('settings.html', form=form)
+
 @bp.app_errorhandler(404)
 def redirect_main_page(e):
     return redirect(url_for('app.home'))
