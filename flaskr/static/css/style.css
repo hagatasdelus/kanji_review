@@ -1,5 +1,5 @@
 .wrap {
-  display: inline;
+  display: flex;
   flex-direction: column;
   width: 100%;
   justify-content: space-between;
@@ -21,6 +21,17 @@
   align-items: stretch;
   max-width: 100%;
   justify-content: center;
+}
+#reading_blank {
+  margin: 22px;
+  margin-left: 100%;
+  margin-right: 100%;
+  margin-bottom: 45px; /* 45pxで丁度だった*/
+}
+#reading p {
+  margin-top: 0px;
+  margin-bottom: 0;
+  transform: translateY(20px);
 }
 #kanji {
   font-family: serif;

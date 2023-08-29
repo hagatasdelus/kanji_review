@@ -1,7 +1,10 @@
 $(function () {
-  timer = setInterval("get_answer()", 1000);
+  setTimeout("get_answer()", 8000);
+  let idKanji = document.getElementById('kanji');
+  let readingBlankEl = document.createElement('div');
+  readingBlankEl.id = 'reading_blank';
+  idKanji.parentNode.insertBefore(readingBlankEl, idKanji);
 });
-
 function get_answer() {
   $.getJSON(
     "answer_ajax",
@@ -9,6 +12,7 @@ function get_answer() {
       kanji_id: kanji_id,
     },
     function (data) {
+      $('#reading_blank').hide();
       $("#kanji").before(data["data"]);
     }
   );

@@ -12,10 +12,6 @@ from flaskr.utils.answer_formats import make_answer_format
 
 bp = Blueprint('app', __name__, url_prefix='')
 
-
-GREEN = '\033[92m'
-END =  '\033[0m'
-
 @bp.route('/')
 def home():
     return render_template('home.html')
@@ -38,7 +34,7 @@ def question():
     session['readings'] = kanji.readings
     return render_template('kanji_question.html', form=form, kanji=kanji)
 
-@bp.route('/question/retry', methods=['GET', 'POST'])
+@bp.route('/retry', methods=['GET', 'POST']) #question/retry
 def retry():
     form = AnswerForm()
     kanji_id = session.get('kanji_id')
@@ -50,7 +46,7 @@ def retry():
         else:
             flash('不正解', 'danger')
             return redirect(url_for('app.retry'))
-    return render_template('kanji_question_retry.html', form=form, kanji=kanji)
+    return render_template('kanji_question.html', form=form, kanji=kanji)
 
 @bp.route('register_kanji', methods=['GET', 'POST'])
 def register_kanji():
@@ -90,7 +86,6 @@ def search_kanji():
 @bp.route('/answer_ajax', methods=['GET'])
 def answer_ajax():
     kanji_id = request.args.get('kanji_id', -1, type=int)
-    print(GREEN + f'kanji_id: {kanji_id}' + END)
     kanji = Kanji.select_kanji_by_id(kanji_id)
     return jsonify(data=make_answer_format(kanji))
 
