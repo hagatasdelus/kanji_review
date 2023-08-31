@@ -14,7 +14,9 @@
     {% if messages %}
       {% for category, message in messages %}
         <div class="{{ category }}">{{ message }}</div>
+        {% if form == None %} {#修正点#}
         <img src="{{ url_for('static', filename='images/circle5.png')}}" draggable="false" alt="success">
+        {% endif %} {#修正点#}
       {% endfor %}
     {% else %}
     <div id="category-blank"></div>
@@ -24,6 +26,7 @@
     {{ form.csrf_token }}
     {{ form.hidden_tag() }}
     <p id="kanji">{{ kanji.kanji }}</p>
+    {% form != None %} {#修正点#}
     <div class="container1">
       {% if kanji.hints == 'nothing' %}
       <p id="blank"></p>
@@ -41,6 +44,7 @@
       <p id="blank"></p>
       {% endif %}
     </div>
+    {% endif %}{#修正点#}
   </form>
 </div>
 {% endblock %}

@@ -42,11 +42,20 @@ def retry():
     if form.validate_on_submit():
         if form.readings.data == kanji.readings:
             flash('正解', 'success')
-            return redirect(url_for('app.question'))
+            # return redirect(url_for('app.question'))
+            return redirect(url_for('app.success'))
         else:
             flash('不正解', 'danger')
             return redirect(url_for('app.retry'))
     return render_template('kanji_question.html', form=form, kanji=kanji)
+
+@bp.route('/success', methods=['GET', 'POST'])
+def success():
+    kanji_id = session.get('kanji_id')
+    kanji = Kanji.select_kanji_by_id(kanji_id)
+    if request.method == 'POST':
+        return redirect(url_for('app.question'))
+    return render_template('kanji_question.html', form=None, kanji=kanji)
 
 @bp.route('register_kanji', methods=['GET', 'POST'])
 def register_kanji():
