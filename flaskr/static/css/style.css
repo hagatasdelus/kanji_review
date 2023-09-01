@@ -41,7 +41,7 @@ img {
   margin: 22px;
   margin-left: 100%;
   margin-right: 100%;
-  margin-bottom: 45px; /* 45pxで丁度だった*/
+  margin-bottom: 45px;
 }
 #reading p {
   position: relative;
