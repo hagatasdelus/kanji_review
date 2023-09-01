@@ -1,5 +1,5 @@
 $(function () {
-  setTimeout("get_answer()", 8000);
+  setTimeout("get_answer()", 10000);
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
   readingBlankEl.id = 'reading_blank';
