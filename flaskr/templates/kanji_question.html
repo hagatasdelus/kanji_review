@@ -7,19 +7,31 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
 <script>
   let kanji_id = "{{ kanji.id }}";
+  let suc = "{{ suc }}";
+  let q_url = "{{ url_for('app.question') }}";
 </script>
 <script src="{{url_for('static', filename='scripts/answer.js')}}"></script>
 <div class="wrap">
-  {% with messages = get_flashed_messages(with_categories=true) %} {% if
-  messages %} {% for category, message in messages %}
-  <div class="{{ category }}">{{ message }}</div>
-  {% endfor %} {% else %}
-  <div id="category-blank"></div>
-  {% endif %} {% endwith %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="{{ category }}">{{ message }}</div>
+        {% if not form %}
+        <img src="{{ url_for('static', filename='images/circle1.png')}}" draggable="false" alt="success">
+        {% endif %}
+      {% endfor %}
+    {% else %}
+    <div id="category-blank"></div>
+    {% endif %}
+  {% endwith %}
   <form method="POST" action="">
-    {{ form.csrf_token }} {{ form.hidden_tag() }}
+    {% if form %}
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {% endif %}
     <p id="kanji">{{ kanji.kanji }}</p>
-    <div class="container1">
+    {% if form %}
+    <div id="kanjinfo">
       {% if kanji.hints == 'nothing' %}
       <p id="blank"></p>
       {% elif kanji.hints == '地名・建造物' %}
@@ -36,6 +48,7 @@
       <p id="blank"></p>
       {% endif %}
     </div>
+    {% endif %}
   </form>
 </div>
 {% endblock %}

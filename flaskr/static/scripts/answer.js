@@ -1,3 +1,7 @@
+if (suc) {
+  get_answer();
+}
+
 $(function () {
   setTimeout("get_answer()", 8000);
   let idKanji = document.getElementById('kanji');
@@ -14,6 +18,10 @@ function get_answer() {
     function (data) {
       $('#reading_blank').hide();
       $("#kanji").before(data["data"]);
+      $('#kanjinfo').hide();
+      setTimeout(function() {
+        window.location.href = q_url;
+      }, 1500);
     }
   );
 }

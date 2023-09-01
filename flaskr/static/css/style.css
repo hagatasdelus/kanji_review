@@ -3,20 +3,35 @@
   flex-direction: column;
   width: 100%;
   justify-content: space-between;
+  position: relative;
 }
 .success,
 .danger {
   text-align: center;
   order: -1;
-  color: red;
   font-size: 30px;
+}
+.success {
+  color: rgb(213, 0, 0);
+}
+.danger {
+  color: rgb(11, 0, 213);
+}
+img {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 173px;
 }
 #category-blank {
   margin: 22.3px;
   margin-left: 100%;
   margin-right: 100%;
 }
-.container1 {
+#kanjinfo {
   display: flex;
   align-items: stretch;
   max-width: 100%;
@@ -26,17 +41,21 @@
   margin: 22px;
   margin-left: 100%;
   margin-right: 100%;
-  margin-bottom: 45px; /* 45pxで丁度だった*/
+  margin-bottom: 45px;
 }
 #reading p {
+  position: relative;
   margin-top: 0px;
   margin-bottom: 0;
   transform: translateY(20px);
+  z-index: 2;
 }
 #kanji {
+  position: relative;
   font-family: serif;
   font-size: 110px;
   text-align: center;
+  z-index: 2;
 }
 #hints,
 #blds,

@@ -18,3 +18,10 @@
     margin-top: 50px;
     margin-left: 50px;
 }
+
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
