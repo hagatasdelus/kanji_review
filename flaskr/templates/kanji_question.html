@@ -7,17 +7,10 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
 <script>
   let kanji_id = "{{ kanji.id }}";
-  let suc = "{{ suc }}"
+  let suc = "{{ suc }}";
+  let q_url = "{{ url_for('app.question') }}";
 </script>
 <script src="{{url_for('static', filename='scripts/answer.js')}}"></script>
-<script>
-  if (suc) {
-    get_answer();
-    setTimeout(function() {
-      window.location.href = "{{ url_for('app.question') }}";
-    }, 2000);
-  }
-</script>
 <div class="wrap">
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -38,7 +31,7 @@
     {% endif %}
     <p id="kanji">{{ kanji.kanji }}</p>
     {% if form %}
-    <div class="container1">
+    <div id="kanjinfo">
       {% if kanji.hints == 'nothing' %}
       <p id="blank"></p>
       {% elif kanji.hints == '地名・建造物' %}

@@ -23,7 +23,7 @@ def question():
     if not kanji:
         flash('漢字が見つかりませんでした')
         return redirect(url_for('app.home'))
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate():
         if form.readings.data == session.get('readings'):
             flash('正解', 'success')
             return redirect(url_for('app.success'))
@@ -39,7 +39,7 @@ def retry():
     form = AnswerForm()
     kanji_id = session.get('kanji_id')
     kanji = Kanji.select_kanji_by_id(kanji_id)
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate():
         if form.readings.data == kanji.readings:
             flash('正解', 'success')
             return redirect(url_for('app.success'))

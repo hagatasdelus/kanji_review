@@ -9,8 +9,13 @@
 .danger {
   text-align: center;
   order: -1;
-  color: rgb(213, 0, 0);
   font-size: 30px;
+}
+.success {
+  color: rgb(213, 0, 0);
+}
+.danger {
+  color: rgb(11, 0, 213);
 }
 img {
   width: 200px;
@@ -21,13 +26,12 @@ img {
   left: 50%;
   top: 173px;
 }
-
 #category-blank {
   margin: 22.3px;
   margin-left: 100%;
   margin-right: 100%;
 }
-.container1 {
+#kanjinfo {
   display: flex;
   align-items: stretch;
   max-width: 100%;
