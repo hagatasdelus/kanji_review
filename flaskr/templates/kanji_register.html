@@ -4,6 +4,7 @@
 漢字登録 - {{ super() }}
 {% endblock %}
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css')}}">
 <div class="regist">
     <h1>漢字登録画面</h1>
     {% for message in get_flashed_messages() %}

@@ -68,7 +68,7 @@ def register_kanji():
         with app.app_context():
             with transaction():
                 kanjis.create_new_book()
-            flash('kanji registration has been completed')
+            flash(f'"{form.kanji.data}"の登録が完了しました。')
         return redirect(url_for('app.register_kanji'))
     return render_template('kanji_register.html', form=form)
 
@@ -94,6 +94,10 @@ def answer_ajax():
     kanji_id = request.args.get('kanji_id', -1, type=int)
     kanji = Kanji.select_kanji_by_id(kanji_id)
     return jsonify(data=make_answer_format(kanji))
+
+@bp.route('/settings', methods=['GET'])
+def settings():
+    return render_template('')
 
 @bp.app_errorhandler(404)
 def redirect_main_page(e):
