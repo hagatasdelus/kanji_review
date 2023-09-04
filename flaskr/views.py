@@ -3,7 +3,8 @@ from flask import (
     session, flash, jsonify
 )
 from flaskr.forms import (
-    RegisterKanjiForm, AnswerForm, DeleteForm, SearchForm
+    RegisterKanjiForm, AnswerForm, DeleteForm, SearchForm,
+    SettingForm
 )
 from flaskr.models import (
     Kanji, transaction
@@ -95,9 +96,12 @@ def answer_ajax():
     kanji = Kanji.select_kanji_by_id(kanji_id)
     return jsonify(data=make_answer_format(kanji))
 
-@bp.route('/settings', methods=['GET'])
+@bp.route('/settings', methods=['GET', 'POST'])
 def settings():
-    return render_template('')
+    form = SettingForm(request.form)
+    if request.method == 'POST' and form.validate():
+        
+    return render_template('settings.html', form=form)
 
 @bp.app_errorhandler(404)
 def redirect_main_page(e):

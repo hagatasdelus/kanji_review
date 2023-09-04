@@ -1,16 +1,19 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import (
-    StringField, SubmitField, BooleanField, SelectField
+    StringField, SubmitField, BooleanField, SelectField,
+    IntegerField
 )
 from wtforms import ValidationError
-from wtforms.validators import DataRequired 
+from wtforms.validators import (
+    DataRequired, NumberRange
+)
 from flaskr.models import Kanji
 
 class RegisterKanjiForm(FlaskForm):
     kanji = StringField('漢字: ', validators=[DataRequired()])
     readings = StringField('読み: ', validators=[DataRequired()])
     hints = SelectField(label='ヒント: ', choices=[('nothing', 'なし'), ('生物', '生物'), ('人名', '人名'), ('植物', '植物'),('地名・建造物', '地名・建造物')])
-    sp_char = BooleanField('文字数･読み特殊?:')
+    sp_char = BooleanField('文字数･読み特殊:')
     submit = SubmitField('登録')
 
     def validate_kanji(self, field):
@@ -35,3 +38,8 @@ class DeleteForm(FlaskForm):
 class SearchForm(FlaskForm):
     kanji = StringField('漢字: ', validators=[DataRequired()])
     submit = SubmitField('検索')
+
+class SettingForm(FlaskForm):
+    circle = BooleanField('サークル表示:')
+    next_Q_time = IntegerField('次の問題までの秒数(5~20s): ', validators=[NumberRange(5, 20, 'その値は設定できません')])
+    submit = SubmitField('設定')
