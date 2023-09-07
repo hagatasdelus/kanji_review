@@ -1,0 +1,27 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends "base.html" %}
+{% block title %}
+漢字登録 - {{ super() }}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css')}}">
+<div class="regist">
+    <h1>漢字登録画面</h1>
+    {% for message in get_flashed_messages() %}
+    {{ message }}
+    {% endfor %}
+    <form method="POST" autocomplete="off">
+        {{ form.csrf_token }}
+        {{ render_field(form.kanji) }}
+        {{ render_field(form.readings) }}
+        {{ render_field(form.hints) }}
+        {{ render_field(form.sp_char, checked=False) }}
+        {{ form.submit() }}
+    </form>
+</div>
+<div class="delete">
+    <a href="{{url_for('app.kanji_delete')}}">
+        漢字削除はこちら
+    </a>
+</div>
+{% endblock %}
