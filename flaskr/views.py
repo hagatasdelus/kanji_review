@@ -99,8 +99,19 @@ def answer_ajax():
 @bp.route('/settings', methods=['GET', 'POST'])
 def settings():
     form = SettingForm(request.form)
-
-    return render_template('settings.html', form=form)
+    if request.method == 'POST' and form.validate():
+        flash('設定が更新されました')
+        session['settings'] = {
+            'circle': form.circle.data,
+            'next_Q_time': form.next_Q_time.data,
+            'success_sound': form.success_sound.data
+        }
+        return redirect(url_for('app.settings'))
+    return render_template(
+        'settings.html',
+        form=form, 
+        settings=session.get('settings', {'circle': True, 'next_Q_time': 8, 'success_sound': False})
+        )
 
 @bp.app_errorhandler(404)
 def redirect_main_page(e):

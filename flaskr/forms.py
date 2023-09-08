@@ -43,4 +43,4 @@ class SettingForm(FlaskForm):
     circle = BooleanField('サークル表示:')
     next_Q_time = IntegerField('次の問題までの秒数(5~20s): ', validators=[NumberRange(5, 20, 'その値は設定できません')])
     success_sound = BooleanField('SE:')
-    submit = SubmitField('設定')
+    submit = SubmitField('更新')
