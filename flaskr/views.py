@@ -21,39 +21,63 @@ def home():
 def question():
     form = AnswerForm()
     kanji = Kanji.get_kanji()
+    circle=session.get('circle', True)
     if not kanji:
         flash('漢字が見つかりませんでした')
         return redirect(url_for('app.home'))
     if request.method == 'POST' and form.validate():
         if form.readings.data == session.get('readings'):
             flash('正解', 'success')
+            if not circle:
+                return redirect(url_for('app.question'))
             return redirect(url_for('app.success'))
         else:
             flash('不正解', 'danger')
             return redirect(url_for('app.retry'))
     session['kanji_id'] = kanji.id
     session['readings'] = kanji.readings
-    return render_template('kanji_question.html', form=form, kanji=kanji)
+    time=session.get('time', 8)
+    se=session.get('success_sound', False)
+    return render_template(
+        'kanji_question.html',
+        form=form,
+        kanji=kanji,
+        circle=circle,
+        time=time,
+        se=se
+    )
 
 @bp.route('/retry', methods=['GET', 'POST'])
 def retry():
     form = AnswerForm()
     kanji_id = session.get('kanji_id')
     kanji = Kanji.select_kanji_by_id(kanji_id)
+    circle=session.get('circle', True)
     if request.method == 'POST' and form.validate():
         if form.readings.data == kanji.readings:
             flash('正解', 'success')
+            if not circle:
+                return redirect(url_for('app.question'))
             return redirect(url_for('app.success'))
         else:
             flash('不正解', 'danger')
             return redirect(url_for('app.retry'))
-    return render_template('kanji_question.html', form=form, kanji=kanji)
+    time=session.get('time', 8)
+    se=session.get('success_sound', False)
+    return render_template(
+        'kanji_question.html',
+        form=form,
+        kanji=kanji,
+        circle=circle,
+        time=time,
+        se=se
+    )
 
 @bp.route('/success', methods=['GET', 'POST'])
 def success():
     kanji_id = session.get('kanji_id')
     kanji = Kanji.select_kanji_by_id(kanji_id)
-    return render_template('kanji_question.html', kanji=kanji, suc=True)
+    return render_template('kanji_question.html', kanji=kanji)
 
 @bp.route('register_kanji', methods=['GET', 'POST'])
 def register_kanji():
@@ -101,17 +125,20 @@ def settings():
     form = SettingForm(request.form)
     if request.method == 'POST' and form.validate():
         flash('設定が更新されました')
-        session['settings'] = {
-            'circle': form.circle.data,
-            'next_Q_time': form.next_Q_time.data,
-            'success_sound': form.success_sound.data
-        }
+        session['circle'] = form.circle.data
+        session['time'] = form.next_Q_time.data
+        session['success_sound'] = form.success_sound.data
         return redirect(url_for('app.settings'))
+    circle=session.get('circle', True)
+    time=session.get('time', 8)
+    se=session.get('success_sound', False)
     return render_template(
         'settings.html',
         form=form, 
-        settings=session.get('settings', {'circle': True, 'next_Q_time': 8, 'success_sound': False})
-        )
+        circle_on=circle,
+        time=time,
+        se_on=se
+    )
 
 @bp.app_errorhandler(404)
 def redirect_main_page(e):

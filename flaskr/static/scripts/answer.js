@@ -1,9 +1,5 @@
-if (suc) {
-  get_answer();
-}
-
 $(function () {
-  setTimeout("get_answer()", 8000);
+  setTimeout("get_answer()", time);
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
   readingBlankEl.id = 'reading_blank';
@@ -22,6 +18,7 @@ function get_answer() {
       setTimeout(function() {
         window.location.href = q_url;
       }, 1500);
+      
     }
   );
 }

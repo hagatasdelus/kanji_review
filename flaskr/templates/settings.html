@@ -5,7 +5,6 @@
 {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css')}}">
-<script src="{{ url_for('static', filename='scripts/')}}"></script>
 <div class="regist">
     <h1>設定</h1>
     {% for message in get_flashed_messages() %}
@@ -13,9 +12,9 @@
     {% endfor %}
     <form method="POST" autocomplete="off">
         {{ form.csrf_token }}
-        {{ render_field(form.circle, checked=settings['circle']) }}
-        {{ render_field(form.next_Q_time, value=settings['next_Q_time']) }}
-        {{ render_field(form.success_sound, checked=settings['success_sound']) }}
+        {{ render_field(form.circle, checked=circle_on) }}
+        {{ render_field(form.next_Q_time, value=time) }}
+        {{ render_field(form.success_sound, checked=se_on) }}
         {{ form.submit() }}
     </form>
 </div>
