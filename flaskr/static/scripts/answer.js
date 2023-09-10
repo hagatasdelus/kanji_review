@@ -18,7 +18,6 @@ function get_answer() {
       setTimeout(function() {
         window.location.href = q_url;
       }, 1500);
-      
     }
   );
 }

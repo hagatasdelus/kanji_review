@@ -52,7 +52,7 @@ def retry():
     form = AnswerForm()
     kanji_id = session.get('kanji_id')
     kanji = Kanji.select_kanji_by_id(kanji_id)
-    circle=session.get('circle', True)
+    circle = session.get('circle', True)
     if request.method == 'POST' and form.validate():
         if form.readings.data == kanji.readings:
             flash('正解', 'success')
@@ -62,8 +62,8 @@ def retry():
         else:
             flash('不正解', 'danger')
             return redirect(url_for('app.retry'))
-    time=session.get('time', 8)
-    se=session.get('success_sound', False)
+    time = session.get('time', 8)
+    se = session.get('success_sound', False)
     return render_template(
         'kanji_question.html',
         form=form,
