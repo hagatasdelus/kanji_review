@@ -1,6 +1,6 @@
 $(document).ready(function(){
     if(!$('#circle').prop('checked'))
-    $('#success_sound').prop('checked', false).prop('disabled', true);
+        $('#success_sound').prop('checked', false).prop('disabled', true);
     $('#circle').change(function(){
       if(!this.checked)
         $('#success_sound').prop('checked', false).prop('disabled', true);

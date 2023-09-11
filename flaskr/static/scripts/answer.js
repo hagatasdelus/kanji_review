@@ -2,13 +2,11 @@ let success;
 success = new Audio('../static/se/suc.mp3');
 if (suc) {
   get_answer();
-  if (se) success.play();
+  if (se)
+    success.play();
 }
 $(function () {
   setTimeout("get_answer()", time);
-  window.onload = function() {
-    document.getElementById('readings').reset();
-  }
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
   readingBlankEl.id = 'reading_blank';
@@ -16,8 +14,7 @@ $(function () {
 });
 function get_answer() {
   $.getJSON(
-    "answer_ajax",
-    {
+    "answer_ajax", {
       kanji_id: kanji_id,
     },
     function (data) {
