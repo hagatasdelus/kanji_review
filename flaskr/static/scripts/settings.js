@@ -1,12 +1,10 @@
-circle = document.querySelector('input[name="circle"]').checked;
-next_Q_time = document.querySelector('input[name="next_Q_time"]').value;
-success_sound = document.querySelector('input[name="success_sound"]').checked;
-if (circle) {
-    
-}
-if (next_Q_time) {
-    // 次の問題までの秒数を設定する処理
-}
-if (success_sound) {
-    // SEの処理
-}
+$(document).ready(function(){
+    if(!$('#circle').prop('checked'))
+    $('#success_sound').prop('checked', false).prop('disabled', true);
+    $('#circle').change(function(){
+      if(!this.checked)
+        $('#success_sound').prop('checked', false).prop('disabled', true);
+      else
+        $('#success_sound').prop('disabled', false);
+    });
+  });

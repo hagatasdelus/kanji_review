@@ -1,5 +1,14 @@
+let success;
+success = new Audio('../static/se/suc.mp3');
+if (suc) {
+  get_answer();
+  if (se) success.play();
+}
 $(function () {
   setTimeout("get_answer()", time);
+  window.onload = function() {
+    document.getElementById('readings').reset();
+  }
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
   readingBlankEl.id = 'reading_blank';
