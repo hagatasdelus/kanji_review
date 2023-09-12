@@ -9,8 +9,7 @@
   let kanji_id = "{{ kanji.id }}";
   let q_url = "{{ url_for('app.question') }}";
   let time = "{{ time }}" * 1000;
-  let suc;
-  let se;
+  let suc, se;
   if ("{{ suc }}" == "True") suc = true;
   else suc = false;
   if ("{{ se }}" == "True") se = true;
@@ -37,9 +36,9 @@
     <p id="kanji">{{ kanji.kanji }}</p>
     {% if form %}
     <div id="kanjinfo">
-      {% if kanji.hints == 'nothing' %}
+      {% if kanji.hints == 'nothing' or not hints_on %}
       <p id="blank"></p>
-      {% elif kanji.hints == '地名・建造物' %}
+      {% elif kanji.hints == '地名・建造物' and hints_on %}
       <p id="blds">{{ kanji.hints }}</p>
       {% else %}
       <p id="hints">{{ kanji.hints }}</p>
@@ -47,7 +46,7 @@
       <p id="answer" name="answer">
         {{ form.readings(autofocus=True, autocomplete="off") }}
       </p>
-      {% if kanji.sp_char %}
+      {% if kanji.sp_char and hints_on%}
       <p id="special">文字数・読み特殊</p>
       {% else %}
       <p id="blank"></p>

@@ -38,14 +38,16 @@ def question():
     session['readings'] = kanji.readings
     time = session.get('time', 8)
     se = session.get('success_sound', False)
-#    print(f'{circle} {time} {se}')
+    hints_exist = session.get('hints_exist', False)
+    # print(f'{circle} {time} {se}')
     return render_template(
         'kanji_question.html',
         form=form,
         kanji=kanji,
         circle=circle,
         time=time,
-        se=se
+        se=se,
+        hints_on=hints_exist
     )
 
 @bp.route('/retry', methods=['GET', 'POST'])
@@ -65,13 +67,15 @@ def retry():
             return redirect(url_for('app.retry'))
     time = session.get('time', 8)
     se = session.get('success_sound', False)
+    hints_exist = session.get('hints_exist', False)
     return render_template(
         'kanji_question.html',
         form=form,
         kanji=kanji,
         circle=circle,
         time=time,
-        se=se
+        se=se,
+        hints_on=hints_exist
     )
 
 @bp.route('/success', methods=['GET', 'POST'])
@@ -140,16 +144,19 @@ def settings():
         session['circle'] = form.circle.data
         session['time'] = form.next_Q_time.data
         session['success_sound'] = form.success_sound.data
+        session['hints_exist'] = form.hints_exist.data
         return redirect(url_for('app.settings'))
     circle = session.get('circle', True)
     time = session.get('time', 8)
     se = session.get('success_sound', False)
+    hints_exist = session.get('hints_exist', False)
     return render_template(
         'settings.html',
         form=form, 
         circle_on=circle,
         time=time,
-        se_on=se
+        se_on=se,
+        hints_on=hints_exist
     )
 
 @bp.app_errorhandler(404)
