@@ -26,6 +26,8 @@ def question():
         flash('漢字が見つかりませんでした')
         return redirect(url_for('app.home'))
     if request.method == 'POST' and form.validate():
+        if form.readings.data == 'q':
+            return redirect(url_for('app.question'))
         if form.readings.data == session.get('readings'):
             flash('正解', 'success')
             if not circle:
@@ -57,6 +59,8 @@ def retry():
     kanji = Kanji.select_kanji_by_id(kanji_id)
     circle = session.get('circle', True)
     if request.method == 'POST' and form.validate():
+        if form.readings.data == 'q':
+            return redirect(url_for('app.question'))
         if form.readings.data == kanji.readings:
             flash('正解', 'success')
             if not circle:

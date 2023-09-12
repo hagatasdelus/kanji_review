@@ -18,6 +18,7 @@
         <p>※SEはサークル表示ONのときのみ有効</p>
         {{ render_field(form.hints_exist, checked=hints_on)}}
         {{ render_field(form.next_Q_time, value=time) }}
+        <p>※5~20で設定可能</p>
         {{ form.submit() }}
     </form>
 </div>
