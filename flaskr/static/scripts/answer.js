@@ -6,7 +6,18 @@ if (suc) {
     success.play();
 }
 $(function () {
-  setTimeout("get_answer()", time);
+  // setTimeout("get_answer()", time);
+  if (!localStorage.getItem('start_time')) {
+    localStorage.setItem('start_time', new Date().getTime());
+  }
+
+  let elapsed = new Date().getTime() - localStorage.getItem('start_time');
+  let remaining = time - elapsed;
+  if (remaining > 0) {
+    setTimeout(get_answer, remaining);
+  } else {
+    get_answer();
+  }
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
   readingBlankEl.id = 'reading_blank';

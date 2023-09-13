@@ -41,6 +41,7 @@ def question():
     time = session.get('time', 8)
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
+    gamemode = session.get('review_mode', False)
     # print(f'{circle} {time} {se}')
     return render_template(
         'kanji_question.html',
@@ -49,7 +50,8 @@ def question():
         circle=circle,
         time=time,
         se=se,
-        hints_on=hints_exist
+        hints_on=hints_exist,
+        gamemode=gamemode
     )
 
 @bp.route('/retry', methods=['GET', 'POST'])
@@ -72,6 +74,7 @@ def retry():
     time = session.get('time', 8)
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
+    gamemode = session.get('review_mode', False)
     return render_template(
         'kanji_question.html',
         form=form,
@@ -79,7 +82,8 @@ def retry():
         circle=circle,
         time=time,
         se=se,
-        hints_on=hints_exist
+        hints_on=hints_exist,
+        gamemode=gamemode
     )
 
 @bp.route('/success', methods=['GET', 'POST'])
@@ -149,18 +153,21 @@ def settings():
         session['time'] = form.next_Q_time.data
         session['success_sound'] = form.success_sound.data
         session['hints_exist'] = form.hints_exist.data
+        session['review_mode'] = form.review_mode.data
         return redirect(url_for('app.settings'))
     circle = session.get('circle', True)
     time = session.get('time', 8)
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
+    gamemode = session.get('review_mode', False)
     return render_template(
         'settings.html',
         form=form, 
         circle_on=circle,
         time=time,
         se_on=se,
-        hints_on=hints_exist
+        hints_on=hints_exist,
+        gamemode=gamemode
     )
 
 @bp.app_errorhandler(404)

@@ -40,8 +40,9 @@ class SearchForm(FlaskForm):
     submit = SubmitField('検索')
 
 class SettingForm(FlaskForm):
-    circle = BooleanField('サークル表示:')
+    circle = BooleanField('サークル表示: ')
     next_Q_time = IntegerField('次問題までの秒数: ', validators=[NumberRange(5, 20, 'その値は設定できません')])
-    success_sound = BooleanField('SE:')
+    success_sound = BooleanField('SE: ')
     hints_exist = BooleanField('ヒントの表示: ')
+    review_mode = BooleanField('復習ゲームモード: ')
     submit = SubmitField('更新')
