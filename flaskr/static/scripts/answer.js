@@ -1,23 +1,32 @@
-let success;
-success = new Audio('../static/se/suc.mp3');
+let success_se;
+let timer;
+success_se = new Audio('../static/se/suc.mp3');
 if (suc) {
   get_answer();
   if (se)
-    success.play();
+    success_se.play();
 }
-$(function () {
-  // setTimeout("get_answer()", time);
-  if (!localStorage.getItem('start_time')) {
+
+const play_review_game = () => {
+  if (window.location.pathname === '/question') {
     localStorage.setItem('start_time', new Date().getTime());
   }
 
   let elapsed = new Date().getTime() - localStorage.getItem('start_time');
   let remaining = time - elapsed;
   if (remaining > 0) {
-    setTimeout(get_answer, remaining);
-  } else {
-    get_answer();
+    if (suc) clearTimeout(timer)
+    else timer = setTimeout(get_answer, remaining);
   }
+}
+
+$(function () {
+  if (!gamemode) {
+    setInterval(get_answer, time);
+  } else {
+    play_review_game();
+  }
+
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
   readingBlankEl.id = 'reading_blank';

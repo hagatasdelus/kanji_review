@@ -9,11 +9,13 @@
   let kanji_id = "{{ kanji.id }}";
   let q_url = "{{ url_for('app.question') }}";
   let time = "{{ time }}" * 1000;
-  let suc, se;
+  let suc, se, gamemode;
   if ("{{ suc }}" == "True") suc = true;
   else suc = false;
   if ("{{ se }}" == "True") se = true;
   else se = false;
+  if ("{{ gamemode }}" == "True") gamemode = true;
+  else gamemode = false;
 </script>
 <script src="{{url_for('static', filename='scripts/answer.js')}}"></script>
 <div class="wrap">

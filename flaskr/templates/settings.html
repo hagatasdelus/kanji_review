@@ -19,6 +19,7 @@
         {{ render_field(form.hints_exist, checked=hints_on)}}
         {{ render_field(form.next_Q_time, value=time) }}
         <p>※5~20で設定可能</p>
+        {{ render_field(form.review_mode, checked=gamemode)}}
         {{ form.submit() }}
     </form>
 </div>
