@@ -4,7 +4,7 @@
 設定 - {{ super() }}
 {% endblock %}
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css')}}">
 <script src="{{ url_for('static', filename='scripts/settings.js')}}"></script>
 <div class="regist">
     <h1>設定</h1>
@@ -15,11 +15,12 @@
         {{ form.csrf_token }}
         {{ render_field(form.circle, checked=circle_on) }}
         {{ render_field(form.success_sound, checked=se_on) }}
-        <p>※SEはサークル表示ONのときのみ有効</p>
+        <p class="settings-description">※SEはサークル表示ONのときのみ有効</p>
         {{ render_field(form.hints_exist, checked=hints_on)}}
         {{ render_field(form.next_Q_time, value=time) }}
-        <p>※5~20で設定可能</p>
+        <p class="settings-description">※5~20で設定可能</p>
         {{ render_field(form.review_mode, checked=gamemode)}}
+        <p class="settings-description">※制限時間が有効になります</p>
         {{ form.submit() }}
     </form>
 </div>

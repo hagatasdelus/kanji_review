@@ -21,11 +21,10 @@ const play_review_game = () => {
 }
 
 $(function () {
-  if (!gamemode) {
+  if (!gamemode) 
     setInterval(get_answer, time);
-  } else {
+  else 
     play_review_game();
-  }
 
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
