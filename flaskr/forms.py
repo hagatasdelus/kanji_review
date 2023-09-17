@@ -41,8 +41,8 @@ class SearchForm(FlaskForm):
 
 class SettingForm(FlaskForm):
     circle = BooleanField('サークル表示: ')
-    next_Q_time = IntegerField('次問題までの秒数: ', validators=[NumberRange(5, 20, 'その値は設定できません')])
-    success_sound = BooleanField('SE: ')
+    next_Q_time = IntegerField('次問題までの秒数(5~20で設定可能): ', validators=[NumberRange(5, 20, 'その値は設定できません')])
+    success_sound = BooleanField('SE(サークル表示ONのときのみ有効): ')
     hints_exist = BooleanField('ヒントの表示: ')
-    review_mode = BooleanField('復習ゲームモード: ')
+    review_mode = BooleanField('復習ゲームモード(制限時間が有効になります): ')
     submit = SubmitField('更新')

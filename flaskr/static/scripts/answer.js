@@ -1,29 +1,52 @@
 let success_se;
 let timer;
-success_se = new Audio('../static/se/suc.mp3');
+let passTimer;
+let passTime = 0;
+success_se = new Audio('../static/se/success_se.mp3');
 if (suc) {
   get_answer();
   if (se)
     success_se.play();
 }
 
+function show_second_left(remaining) {
+  let answer_element = document.getElementById('kanjinfo');
+  old_second_left_elm = document.getElementById('second_left');
+  if (old_second_left_elm) 
+    old_second_left_elm.remove();
+  if (Math.floor((remaining / 1000) - passTime) < 0)
+    return
+  let second_left_elm = document.createElement('p');
+  second_left_elm.id = 'second_left';
+  second_left_elm.textContent = Math.floor((remaining / 1000) - passTime);
+  answer_element.after(second_left_elm);
+  passTime++;
+}
+
 const play_review_game = () => {
   if (window.location.pathname === '/question') {
     localStorage.setItem('start_time', new Date().getTime());
   }
-
   let elapsed = new Date().getTime() - localStorage.getItem('start_time');
   let remaining = time - elapsed;
+  show_second_left(remaining);
   if (remaining > 0) {
-    if (suc) clearTimeout(timer)
-    else timer = setTimeout(get_answer, remaining);
+    if (suc) {
+      clearTimeout(timer);
+    }
+    else {
+      timer = setTimeout(get_answer, remaining);
+      passTimer = setInterval(function(){
+        show_second_left(remaining)
+      }, 1000);
+    }
   }
 }
 
 $(function () {
   if (!gamemode) 
     setInterval(get_answer, time);
-  else 
+  else
     play_review_game();
 
   let idKanji = document.getElementById('kanji');
@@ -40,6 +63,8 @@ function get_answer() {
       $('#reading_blank').hide();
       $("#kanji").before(data["data"]);
       $('#kanjinfo').hide();
+      clearInterval(passTimer);
+      passTime = 0;
       setTimeout(function() {
         window.location.href = q_url;
       }, 1500);

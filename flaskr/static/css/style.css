@@ -83,6 +83,15 @@ img {
   margin-left: 100px;
   margin-right: 100px;
 }
+#form {
+	padding-bottom: 3rem;
+}
+#second_left {
+  position: fixed;
+  font-size: 30px;
+	bottom: 0;
+  left: calc((100% - 30px) / 2);
+}
 @media screen and (max-width: 928px) {
   #answer {
     margin-left: 20px;
