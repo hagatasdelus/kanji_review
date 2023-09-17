@@ -7,8 +7,15 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
 <script>
   let kanji_id = "{{ kanji.id }}";
-  let suc = "{{ suc }}";
   let q_url = "{{ url_for('app.question') }}";
+  let time = "{{ time }}" * 1000;
+  let suc, se, gamemode;
+  if ("{{ suc }}" == "True") suc = true;
+  else suc = false;
+  if ("{{ se }}" == "True") se = true;
+  else se = false;
+  if ("{{ gamemode }}" == "True") gamemode = true;
+  else gamemode = false;
 </script>
 <script src="{{url_for('static', filename='scripts/answer.js')}}"></script>
 <div class="wrap">
@@ -27,22 +34,21 @@
   <form method="POST" action="">
     {% if form %}
     {{ form.csrf_token }}
-    {{ form.hidden_tag() }}
     {% endif %}
     <p id="kanji">{{ kanji.kanji }}</p>
     {% if form %}
     <div id="kanjinfo">
-      {% if kanji.hints == 'nothing' %}
+      {% if kanji.hints == 'nothing' or not hints_on %}
       <p id="blank"></p>
-      {% elif kanji.hints == '地名・建造物' %}
+      {% elif kanji.hints == '地名・建造物' and hints_on %}
       <p id="blds">{{ kanji.hints }}</p>
       {% else %}
       <p id="hints">{{ kanji.hints }}</p>
       {% endif %}
-      <p id="answer">
-        {{ form.readings(autofocus=True, autocomplete="off") }}<br />
+      <p id="answer" name="answer">
+        {{ form.readings(autofocus=True, autocomplete="off") }}
       </p>
-      {% if kanji.sp_char %}
+      {% if kanji.sp_char and hints_on%}
       <p id="special">文字数・読み特殊</p>
       {% else %}
       <p id="blank"></p>

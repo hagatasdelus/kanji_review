@@ -3,7 +3,8 @@ from flask import (
     session, flash, jsonify
 )
 from flaskr.forms import (
-    RegisterKanjiForm, AnswerForm, DeleteForm, SearchForm
+    RegisterKanjiForm, AnswerForm, DeleteForm, SearchForm,
+    SettingForm
 )
 from flaskr.models import (
     Kanji, transaction
@@ -20,39 +21,87 @@ def home():
 def question():
     form = AnswerForm()
     kanji = Kanji.get_kanji()
+    circle = session.get('circle', True)
     if not kanji:
         flash('漢字が見つかりませんでした')
         return redirect(url_for('app.home'))
     if request.method == 'POST' and form.validate():
+        if form.readings.data == 'q':
+            return redirect(url_for('app.question'))
         if form.readings.data == session.get('readings'):
             flash('正解', 'success')
+            if not circle:
+                return redirect(url_for('app.question'))
             return redirect(url_for('app.success'))
         else:
             flash('不正解', 'danger')
             return redirect(url_for('app.retry'))
     session['kanji_id'] = kanji.id
     session['readings'] = kanji.readings
-    return render_template('kanji_question.html', form=form, kanji=kanji)
+    time = session.get('time', 8)
+    se = session.get('success_sound', False)
+    hints_exist = session.get('hints_exist', False)
+    gamemode = session.get('review_mode', False)
+    # print(f'{circle} {time} {se}')
+    return render_template(
+        'kanji_question.html',
+        form=form,
+        kanji=kanji,
+        circle=circle,
+        time=time,
+        se=se,
+        hints_on=hints_exist,
+        gamemode=gamemode
+    )
 
 @bp.route('/retry', methods=['GET', 'POST'])
 def retry():
     form = AnswerForm()
     kanji_id = session.get('kanji_id')
     kanji = Kanji.select_kanji_by_id(kanji_id)
+    circle = session.get('circle', True)
     if request.method == 'POST' and form.validate():
+        if form.readings.data == 'q':
+            return redirect(url_for('app.question'))
         if form.readings.data == kanji.readings:
             flash('正解', 'success')
+            if not circle:
+                return redirect(url_for('app.question'))
             return redirect(url_for('app.success'))
         else:
             flash('不正解', 'danger')
             return redirect(url_for('app.retry'))
-    return render_template('kanji_question.html', form=form, kanji=kanji)
+    time = session.get('time', 8)
+    se = session.get('success_sound', False)
+    hints_exist = session.get('hints_exist', False)
+    gamemode = session.get('review_mode', False)
+    return render_template(
+        'kanji_question.html',
+        form=form,
+        kanji=kanji,
+        circle=circle,
+        time=time,
+        se=se,
+        hints_on=hints_exist,
+        gamemode=gamemode
+    )
 
 @bp.route('/success', methods=['GET', 'POST'])
 def success():
     kanji_id = session.get('kanji_id')
     kanji = Kanji.select_kanji_by_id(kanji_id)
-    return render_template('kanji_question.html', kanji=kanji, suc=True)
+    circle = session.get('circle', True)
+    time = session.get('time', 8)
+    se = session.get('success_sound', False)
+    print(f'{circle} {time} {se}')
+    return render_template(
+        'kanji_question.html',
+        kanji=kanji,
+        circle=circle,
+        time = time,
+        se=se,
+        suc=True
+    )
 
 @bp.route('register_kanji', methods=['GET', 'POST'])
 def register_kanji():
@@ -68,7 +117,7 @@ def register_kanji():
         with app.app_context():
             with transaction():
                 kanjis.create_new_book()
-            flash('kanji registration has been completed')
+            flash(f'"{form.kanji.data}"の登録が完了しました。')
         return redirect(url_for('app.register_kanji'))
     return render_template('kanji_register.html', form=form)
 
@@ -94,6 +143,32 @@ def answer_ajax():
     kanji_id = request.args.get('kanji_id', -1, type=int)
     kanji = Kanji.select_kanji_by_id(kanji_id)
     return jsonify(data=make_answer_format(kanji))
+
+@bp.route('/settings', methods=['GET', 'POST'])
+def settings():
+    form = SettingForm(request.form)
+    if request.method == 'POST' and form.validate():
+        flash('設定が更新されました')
+        session['circle'] = form.circle.data
+        session['time'] = form.next_Q_time.data
+        session['success_sound'] = form.success_sound.data
+        session['hints_exist'] = form.hints_exist.data
+        session['review_mode'] = form.review_mode.data
+        return redirect(url_for('app.settings'))
+    circle = session.get('circle', True)
+    time = session.get('time', 8)
+    se = session.get('success_sound', False)
+    hints_exist = session.get('hints_exist', False)
+    gamemode = session.get('review_mode', False)
+    return render_template(
+        'settings.html',
+        form=form, 
+        circle_on=circle,
+        time=time,
+        se_on=se,
+        hints_on=hints_exist,
+        gamemode=gamemode
+    )
 
 @bp.app_errorhandler(404)
 def redirect_main_page(e):

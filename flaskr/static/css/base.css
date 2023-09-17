@@ -1,11 +1,9 @@
 .jumbotron {
     padding: 30px;
 }
-
 .jumbotron h2 {
     margin-bottom: 0;
 }
-
 .container {
     display: flex;
     align-items: stretch;
@@ -18,7 +16,6 @@
     margin-top: 50px;
     margin-left: 50px;
 }
-
 body {
     -webkit-user-select: none;
     -moz-user-select: none;

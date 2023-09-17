@@ -1,9 +1,31 @@
+let success_se;
+let timer;
+success_se = new Audio('../static/se/suc.mp3');
 if (suc) {
   get_answer();
+  if (se)
+    success_se.play();
+}
+
+const play_review_game = () => {
+  if (window.location.pathname === '/question') {
+    localStorage.setItem('start_time', new Date().getTime());
+  }
+
+  let elapsed = new Date().getTime() - localStorage.getItem('start_time');
+  let remaining = time - elapsed;
+  if (remaining > 0) {
+    if (suc) clearTimeout(timer)
+    else timer = setTimeout(get_answer, remaining);
+  }
 }
 
 $(function () {
-  setTimeout("get_answer()", 8000);
+  if (!gamemode) 
+    setInterval(get_answer, time);
+  else 
+    play_review_game();
+
   let idKanji = document.getElementById('kanji');
   let readingBlankEl = document.createElement('div');
   readingBlankEl.id = 'reading_blank';
@@ -11,8 +33,7 @@ $(function () {
 });
 function get_answer() {
   $.getJSON(
-    "answer_ajax",
-    {
+    "answer_ajax", {
       kanji_id: kanji_id,
     },
     function (data) {
