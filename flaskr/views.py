@@ -42,7 +42,6 @@ def question():
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
     gamemode = session.get('review_mode', False)
-    # print(f'{circle} {time} {se}')
     return render_template(
         'kanji_question.html',
         form=form,
@@ -93,7 +92,6 @@ def success():
     circle = session.get('circle', True)
     time = session.get('time', 8)
     se = session.get('success_sound', False)
-    print(f'{circle} {time} {se}')
     return render_template(
         'kanji_question.html',
         kanji=kanji,
