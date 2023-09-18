@@ -2,6 +2,7 @@ let success_se;
 let timer;
 let passTimer;
 let passTime = 0;
+let score;
 success_se = new Audio('../static/se/success_se.mp3');
 if (suc) {
   get_answer();
@@ -16,6 +17,10 @@ function show_second_left(remaining) {
     old_second_left_elm.remove();
   if (Math.floor((remaining / 1000) - passTime) < 0)
     return
+  let score_elm = document.createElement('p');
+  score_elm.id = 'score';
+  score_elm.textContent = score;
+  answer_element.after(score_elm);
   let second_left_elm = document.createElement('p');
   second_left_elm.id = 'second_left';
   second_left_elm.textContent = Math.floor((remaining / 1000) - passTime);
@@ -26,6 +31,7 @@ function show_second_left(remaining) {
 const play_review_game = () => {
   if (window.location.pathname === '/question') {
     localStorage.setItem('start_time', new Date().getTime());
+    score = 0;
   }
   let elapsed = new Date().getTime() - localStorage.getItem('start_time');
   let remaining = time - elapsed;
@@ -65,6 +71,8 @@ function get_answer() {
       $('#kanjinfo').hide();
       clearInterval(passTimer);
       passTime = 0;
+      if (gamemode)
+        score++;
       setTimeout(function() {
         window.location.href = q_url;
       }, 1500);
