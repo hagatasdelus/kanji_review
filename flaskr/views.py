@@ -27,9 +27,11 @@ def question():
         return redirect(url_for('app.home'))
     if request.method == 'POST' and form.validate():
         if form.readings.data == 'q':
+            session['score'] = 0
             return redirect(url_for('app.question'))
         if form.readings.data == session.get('readings'):
             flash('正解', 'success')
+            session['score'] = session.get('score', 0) + 1
             if not circle:
                 return redirect(url_for('app.question'))
             return redirect(url_for('app.success'))
@@ -42,6 +44,7 @@ def question():
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
     gamemode = session.get('review_mode', False)
+    score = session.get('score', 0)
     return render_template(
         'kanji_question.html',
         form=form,
@@ -50,7 +53,8 @@ def question():
         time=time,
         se=se,
         hints_on=hints_exist,
-        gamemode=gamemode
+        gamemode=gamemode,
+        score=score
     )
 
 @bp.route('/retry', methods=['GET', 'POST'])
@@ -64,6 +68,7 @@ def retry():
             return redirect(url_for('app.question'))
         if form.readings.data == kanji.readings:
             flash('正解', 'success')
+            session['score'] = session.get('score', 0) + 1
             if not circle:
                 return redirect(url_for('app.question'))
             return redirect(url_for('app.success'))
@@ -74,6 +79,7 @@ def retry():
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
     gamemode = session.get('review_mode', False)
+    score = session.get('score', 0)
     return render_template(
         'kanji_question.html',
         form=form,
@@ -82,7 +88,8 @@ def retry():
         time=time,
         se=se,
         hints_on=hints_exist,
-        gamemode=gamemode
+        gamemode=gamemode,
+        score=score
     )
 
 @bp.route('/success', methods=['GET', 'POST'])
@@ -171,3 +178,7 @@ def settings():
 @bp.app_errorhandler(404)
 def redirect_main_page(e):
     return redirect(url_for('app.home'))
+
+@bp.app_errorhandler(500)
+def server_error(e):
+    return render_template('500.html'), 500

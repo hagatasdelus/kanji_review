@@ -9,6 +9,7 @@
   let kanji_id = "{{ kanji.id }}";
   let q_url = "{{ url_for('app.question') }}";
   let time = "{{ time }}" * 1000;
+  let score = "{{ score }}";
   let suc, se, gamemode;
   if ("{{ suc }}" == "True") suc = true;
   else suc = false;
@@ -31,7 +32,7 @@
     <div id="category-blank"></div>
     {% endif %}
   {% endwith %}
-  <form method="POST" action="">
+  <form id="kanji-form" method="POST" action="">
     {% if form %}
     {{ form.csrf_token }}
     {% endif %}

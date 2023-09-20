@@ -2,7 +2,6 @@ let success_se;
 let timer;
 let passTimer;
 let passTime = 0;
-let score;
 success_se = new Audio('../static/se/success_se.mp3');
 if (suc) {
   get_answer();
@@ -11,12 +10,16 @@ if (suc) {
 }
 
 function show_second_left(remaining) {
-  let answer_element = document.getElementById('kanjinfo');
-  old_second_left_elm = document.getElementById('second_left');
+  let old_second_left_elm = document.getElementById('second_left');
   if (old_second_left_elm) 
     old_second_left_elm.remove();
+  let old_score_elm = document.getElementById('score');
+  if (old_score_elm)
+    old_score_elm.remove();
   if (Math.floor((remaining / 1000) - passTime) < 0)
     return
+  
+  let answer_element = document.getElementById('kanjinfo');
   let score_elm = document.createElement('p');
   score_elm.id = 'score';
   score_elm.textContent = score;
@@ -31,7 +34,6 @@ function show_second_left(remaining) {
 const play_review_game = () => {
   if (window.location.pathname === '/question') {
     localStorage.setItem('start_time', new Date().getTime());
-    score = 0;
   }
   let elapsed = new Date().getTime() - localStorage.getItem('start_time');
   let remaining = time - elapsed;
@@ -71,8 +73,6 @@ function get_answer() {
       $('#kanjinfo').hide();
       clearInterval(passTimer);
       passTime = 0;
-      if (gamemode)
-        score++;
       setTimeout(function() {
         window.location.href = q_url;
       }, 1500);
