@@ -4,7 +4,7 @@ let passTimer;
 let passTime = 0;
 success_se = new Audio('../static/se/success_se.mp3');
 if (suc) {
-  get_answer();
+  get_answer(1);
   if (se)
     success_se.play();
 }
@@ -43,7 +43,7 @@ const play_review_game = () => {
       clearTimeout(timer);
     }
     else {
-      timer = setTimeout(get_answer, remaining);
+      timer = setTimeout(() => get_answer(0), remaining);
       passTimer = setInterval(function(){
         show_second_left(remaining)
       }, 1000);
@@ -53,7 +53,7 @@ const play_review_game = () => {
 
 $(function () {
   if (!gamemode) 
-    setInterval(get_answer, time);
+    setInterval(() => get_answer(0), time);
   else
     play_review_game();
 
@@ -62,10 +62,11 @@ $(function () {
   readingBlankEl.id = 'reading_blank';
   idKanji.parentNode.insertBefore(readingBlankEl, idKanji);
 });
-function get_answer() {
+function get_answer(failed) {
   $.getJSON(
     "answer_ajax", {
       kanji_id: kanji_id,
+      failed: failed
     },
     function (data) {
       $('#reading_blank').hide();

@@ -146,6 +146,11 @@ def search_kanji():
 @bp.route('/answer_ajax', methods=['GET'])
 def answer_ajax():
     kanji_id = request.args.get('kanji_id', -1, type=int)
+    failed = request.args.get('failed', -1, type=int)
+    if failed == -1:
+        return
+    if failed == 0:
+        session['score'] = 0
     kanji = Kanji.select_kanji_by_id(kanji_id)
     return jsonify(data=make_answer_format(kanji))
 
