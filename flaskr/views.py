@@ -15,6 +15,7 @@ bp = Blueprint('app', __name__, url_prefix='')
 
 @bp.route('/')
 def home():
+    session['score'] = 0
     return render_template('home.html')
 
 @bp.route('/question', methods=['GET', 'POST'])
@@ -124,6 +125,7 @@ def register_kanji():
                 kanjis.create_new_book()
             flash(f'"{form.kanji.data}"の登録が完了しました。')
         return redirect(url_for('app.register_kanji'))
+    session['score'] = 0
     return render_template('kanji_register.html', form=form)
 
 @bp.route('/kanji_delete', methods=['GET', 'POST'])
@@ -134,6 +136,7 @@ def kanji_delete():
             Kanji.delete_kanji(form.kanji.data)
         flash(f'{form.kanji.data}を削除しました')
         return redirect(url_for('app.register_kanji'))
+    session['score'] = 0
     return render_template('kanji_delete.html', form=form)
 
 @bp.route('/search_kanji', methods=['GET'])
@@ -141,6 +144,7 @@ def search_kanji():
     form = SearchForm(request.form)
     kanji = request.args.get('kanji', None, type=str)
     kanji_info = Kanji.select_kanji_info_by_kanji(kanji)
+    session['score'] = 0
     return render_template('search_kanji.html', form=form, kanji=kanji_info)
 
 @bp.route('/answer_ajax', methods=['GET'])
@@ -170,6 +174,7 @@ def settings():
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
     gamemode = session.get('review_mode', False)
+    session['score'] = 0
     return render_template(
         'settings.html',
         form=form, 
@@ -179,6 +184,11 @@ def settings():
         hints_on=hints_exist,
         gamemode=gamemode
     )
+
+# @bp.before_request
+# def before_request():
+#     if request.endpoint not in ['question', 'retry', 'success']:
+#         session['score'] = 0
 
 @bp.app_errorhandler(404)
 def redirect_main_page(e):
