@@ -1,0 +1,36 @@
+# Kanji_Review
+このversionで実装されています。
+なお、ここに表示されている全てのライブラリがこのアプリに使用されているわけではありません。あくまで保存用。
+Package            Version
+------------------ ---------
+alembic            1.9.4
+bcrypt             4.0.1
+certifi            2022.12.7
+charset-normalizer 3.0.1
+click              8.1.3
+Deprecated         1.2.13
+dnspython          2.3.0
+email-validator    1.3.1
+Flask              2.2.2
+Flask-Bcrypt       1.0.1
+Flask-Login        0.6.2
+Flask-Migrate      4.0.4
+Flask-SQLAlchemy   3.0.3
+Flask-WTF          1.1.1
+greenlet           2.0.2
+idna               3.4
+itsdangerous       2.1.2
+jaconv             0.3.3
+Jinja2             3.1.2
+Mako               1.2.4
+MarkupSafe         2.1.2
+pip                23.0
+pykakasi           2.2.1
+requests           2.28.2
+setuptools         65.5.0
+SQLAlchemy         2.0.4
+typing_extensions  4.5.0
+urllib3            1.26.14
+Werkzeug           2.2.2
+wrapt              1.14.1
+WTForms            3.0.1
