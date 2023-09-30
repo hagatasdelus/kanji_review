@@ -22,7 +22,7 @@ function show_second_left(remaining) {
   let answer_element = document.getElementById('kanjinfo');
   let score_elm = document.createElement('p');
   score_elm.id = 'score';
-  score_elm.textContent = score;
+  score_elm.textContent = score+'問連続正解';
   answer_element.after(score_elm);
   let second_left_elm = document.createElement('p');
   second_left_elm.id = 'second_left';
