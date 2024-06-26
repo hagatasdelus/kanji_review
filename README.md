@@ -1,37 +1,18 @@
-# Kanji_Review
-このversionで実装されています。
-なお、ここに表示されている全てのライブラリがこのアプリに使用されているわけではありません。あくまで保存用。<br>
-Python 3.11.1
-Package            Version<br>
------------------- ---------<br>
-alembic            1.9.4<br>
-bcrypt             4.0.1<br>
-certifi            2022.12.7<br>
-charset-normalizer 3.0.1<br>
-click              8.1.3<br>
-Deprecated         1.2.13<br>
-dnspython          2.3.0<br>
-email-validator    1.3.1<br>
-Flask              2.2.2<br>
-Flask-Bcrypt       1.0.1<br>
-Flask-Login        0.6.2<br>
-Flask-Migrate      4.0.4<br>
-Flask-SQLAlchemy   3.0.3<br>
-Flask-WTF          1.1.1<br>
-greenlet           2.0.2<br>
-idna               3.4<br>
-itsdangerous       2.1.2<br>
-jaconv             0.3.3<br>
-Jinja2             3.1.2<br>
-Mako               1.2.4<br>
-MarkupSafe         2.1.2<br>
-pip                23.0<br>
-pykakasi           2.2.1<br>
-requests           2.28.2<br>
-setuptools         65.5.0<br>
-SQLAlchemy         2.0.4<br>
-typing_extensions  4.5.0<br>
-urllib3            1.26.14<br>
-Werkzeug           2.2.2<br>
-wrapt              1.14.1<br>
-WTForms            3.0.1
+# クイズ型漢字復習App
+## 概要
+漢字をクイズ形式で復習するためのアプリケーションです。
+## 特徴
+- 漢字復習クイズ
+- 漢字のDBへの登録・削除
+- 登録漢字の検索・確認
+- クイズの設定
+
+## セットアップと起動方法
+### 前提条件
+- Docker
+- Docker Compose
+
+###　起動
+```
+docker compose up
+```
