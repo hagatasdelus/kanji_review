@@ -1,13 +1,18 @@
-クイズ型漢字復習
-漢字復習のためのアプリ
+# クイズ型漢字復習App
+## 概要
+漢字をクイズ形式で復習するためのアプリケーションです。
+## 特徴
+- 漢字復習クイズ
+- 漢字のDBへの登録・削除
+- 登録漢字の検索・確認
+- クイズの設定
 
-今後Dockerで動作させるためのVersion
-Package            Version
------------------- --------
-Flask              2.2.2
-Flask-Migrate      4.0.4
-Flask-SQLAlchemy   3.0.3
-flask-wtf          1.1.1
-wtforms            3.0.0
-jinja2             3.1.2
-requests           3.0.1
+## セットアップと起動方法
+### 前提条件
+- Docker
+- Docker Compose
+
+###　起動
+```
+docker compose up
+```

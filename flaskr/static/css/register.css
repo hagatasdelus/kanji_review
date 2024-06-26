@@ -5,3 +5,18 @@
     position: absolute;
     inset: 1rem auto auto 1rem;
 } */
+/* https://www.youtube.com/shorts/iy-eA9k16Vs */
+/* input[type=checkbox] {
+    appearance: none;
+}
+label {
+    display: block;
+    position: relative;
+}
+label::before {
+    content: "";
+    display: block;
+    width: 1.5em;
+    aspect-ratio: 1;
+    background-color: blue;
+} */

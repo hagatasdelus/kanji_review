@@ -15,6 +15,7 @@ bp = Blueprint('app', __name__, url_prefix='')
 
 @bp.route('/')
 def home():
+    session['score'] = 0
     return render_template('home.html')
 
 @bp.route('/question', methods=['GET', 'POST'])
@@ -27,9 +28,11 @@ def question():
         return redirect(url_for('app.home'))
     if request.method == 'POST' and form.validate():
         if form.readings.data == 'q':
+            session['score'] = 0
             return redirect(url_for('app.question'))
         if form.readings.data == session.get('readings'):
             flash('正解', 'success')
+            session['score'] = session.get('score', 0) + 1
             if not circle:
                 return redirect(url_for('app.question'))
             return redirect(url_for('app.success'))
@@ -42,7 +45,7 @@ def question():
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
     gamemode = session.get('review_mode', False)
-    # print(f'{circle} {time} {se}')
+    score = session.get('score', 0)
     return render_template(
         'kanji_question.html',
         form=form,
@@ -51,7 +54,8 @@ def question():
         time=time,
         se=se,
         hints_on=hints_exist,
-        gamemode=gamemode
+        gamemode=gamemode,
+        score=score
     )
 
 @bp.route('/retry', methods=['GET', 'POST'])
@@ -65,6 +69,7 @@ def retry():
             return redirect(url_for('app.question'))
         if form.readings.data == kanji.readings:
             flash('正解', 'success')
+            session['score'] = session.get('score', 0) + 1
             if not circle:
                 return redirect(url_for('app.question'))
             return redirect(url_for('app.success'))
@@ -75,6 +80,7 @@ def retry():
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
     gamemode = session.get('review_mode', False)
+    score = session.get('score', 0)
     return render_template(
         'kanji_question.html',
         form=form,
@@ -83,7 +89,8 @@ def retry():
         time=time,
         se=se,
         hints_on=hints_exist,
-        gamemode=gamemode
+        gamemode=gamemode,
+        score=score
     )
 
 @bp.route('/success', methods=['GET', 'POST'])
@@ -93,7 +100,6 @@ def success():
     circle = session.get('circle', True)
     time = session.get('time', 8)
     se = session.get('success_sound', False)
-    print(f'{circle} {time} {se}')
     return render_template(
         'kanji_question.html',
         kanji=kanji,
@@ -119,6 +125,7 @@ def register_kanji():
                 kanjis.create_new_book()
             flash(f'"{form.kanji.data}"の登録が完了しました。')
         return redirect(url_for('app.register_kanji'))
+    session['score'] = 0
     return render_template('kanji_register.html', form=form)
 
 @bp.route('/kanji_delete', methods=['GET', 'POST'])
@@ -129,6 +136,7 @@ def kanji_delete():
             Kanji.delete_kanji(form.kanji.data)
         flash(f'{form.kanji.data}を削除しました')
         return redirect(url_for('app.register_kanji'))
+    session['score'] = 0
     return render_template('kanji_delete.html', form=form)
 
 @bp.route('/search_kanji', methods=['GET'])
@@ -136,11 +144,17 @@ def search_kanji():
     form = SearchForm(request.form)
     kanji = request.args.get('kanji', None, type=str)
     kanji_info = Kanji.select_kanji_info_by_kanji(kanji)
+    session['score'] = 0
     return render_template('search_kanji.html', form=form, kanji=kanji_info)
 
 @bp.route('/answer_ajax', methods=['GET'])
 def answer_ajax():
     kanji_id = request.args.get('kanji_id', -1, type=int)
+    failed = request.args.get('failed', -1, type=int)
+    if failed == -1:
+        return
+    if failed == 0:
+        session['score'] = 0
     kanji = Kanji.select_kanji_by_id(kanji_id)
     return jsonify(data=make_answer_format(kanji))
 
@@ -160,6 +174,7 @@ def settings():
     se = session.get('success_sound', False)
     hints_exist = session.get('hints_exist', False)
     gamemode = session.get('review_mode', False)
+    session['score'] = 0
     return render_template(
         'settings.html',
         form=form, 
@@ -170,6 +185,15 @@ def settings():
         gamemode=gamemode
     )
 
+# @bp.before_request
+# def before_request():
+#     if request.endpoint not in ['question', 'retry', 'success']:
+#         session['score'] = 0
+
 @bp.app_errorhandler(404)
 def redirect_main_page(e):
     return redirect(url_for('app.home'))
+
+@bp.app_errorhandler(500)
+def server_error(e):
+    return render_template('500.html'), 500

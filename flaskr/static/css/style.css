@@ -83,9 +83,6 @@ img {
   margin-left: 100px;
   margin-right: 100px;
 }
-#form {
-	padding-bottom: 3rem;
-}
 #second_left {
   position: fixed;
   font-size: 30px;
@@ -104,4 +101,15 @@ img {
 input {
   width: 300px;
   height: 50px;
+}
+@media screen and (min-width: 400px) {
+  #score {
+    position: fixed;
+    font-size: 30px;
+    right: 2rem;
+    top: calc((100% - 30px) / 2);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
+  
 }

@@ -4,18 +4,26 @@ let passTimer;
 let passTime = 0;
 success_se = new Audio('../static/se/success_se.mp3');
 if (suc) {
-  get_answer();
+  get_answer(1);
   if (se)
     success_se.play();
 }
 
 function show_second_left(remaining) {
-  let answer_element = document.getElementById('kanjinfo');
-  old_second_left_elm = document.getElementById('second_left');
+  let old_second_left_elm = document.getElementById('second_left');
   if (old_second_left_elm) 
     old_second_left_elm.remove();
+  let old_score_elm = document.getElementById('score');
+  if (old_score_elm)
+    old_score_elm.remove();
   if (Math.floor((remaining / 1000) - passTime) < 0)
     return
+  
+  let answer_element = document.getElementById('kanjinfo');
+  let score_elm = document.createElement('p');
+  score_elm.id = 'score';
+  score_elm.textContent = score+'問連続正解';
+  answer_element.after(score_elm);
   let second_left_elm = document.createElement('p');
   second_left_elm.id = 'second_left';
   second_left_elm.textContent = Math.floor((remaining / 1000) - passTime);
@@ -35,7 +43,7 @@ const play_review_game = () => {
       clearTimeout(timer);
     }
     else {
-      timer = setTimeout(get_answer, remaining);
+      timer = setTimeout(() => get_answer(0), remaining);
       passTimer = setInterval(function(){
         show_second_left(remaining)
       }, 1000);
@@ -45,7 +53,7 @@ const play_review_game = () => {
 
 $(function () {
   if (!gamemode) 
-    setInterval(get_answer, time);
+    setInterval(() => get_answer(0), time);
   else
     play_review_game();
 
@@ -54,10 +62,11 @@ $(function () {
   readingBlankEl.id = 'reading_blank';
   idKanji.parentNode.insertBefore(readingBlankEl, idKanji);
 });
-function get_answer() {
+function get_answer(failed) {
   $.getJSON(
     "answer_ajax", {
       kanji_id: kanji_id,
+      failed: failed
     },
     function (data) {
       $('#reading_blank').hide();
