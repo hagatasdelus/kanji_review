@@ -12,7 +12,22 @@
 - Docker
 - Docker Compose
 
-###　起動
+### ビルド
+```
+docker compose build
+```
+###　初回起動
 ```
 docker compose up
+```
+### 再起動
+```
+docker compose restart
+```
+### 停止
+```
+docker compose stop
+```
+### 全停止(削除)
+docker compose down
 ```

@@ -8,3 +8,4 @@ services:
       FLASK_RUN_HOST: 0.0.0.0
     volumes:
       - .:/app
+    command: ["/entrypoint.sh"]
