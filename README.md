@@ -16,7 +16,7 @@
 ```
 docker compose build
 ```
-###　初回起動
+### 初回起動
 ```
 docker compose up
 ```
@@ -29,5 +29,6 @@ docker compose restart
 docker compose stop
 ```
 ### 全停止(削除)
+```
 docker compose down
 ```
