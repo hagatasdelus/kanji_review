@@ -7,7 +7,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 ENV FLASK_APP=setup.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
-CMD ["flask", "run", "--host=0.0.0.0", "--port=8000"]
+ENTRYPOINT [ "entrypoint.sh" ]

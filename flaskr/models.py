@@ -1,6 +1,8 @@
-from flaskr import db
 from contextlib import contextmanager
+
+from flaskr import db
 from sqlalchemy import func
+
 
 @contextmanager
 def transaction():
@@ -14,8 +16,8 @@ def transaction():
 
 class Kanji(db.Model):
 
-    __tablename__ = 'kanjis'
-    
+    __tablename__ = "kanjis"
+
     id = db.Column(db.Integer, primary_key=True)
     kanji = db.Column(db.String(64), index=True, nullable=False)
     readings = db.Column(db.String(64), index=True, unique=False)
@@ -27,24 +29,22 @@ class Kanji(db.Model):
         self.readings = readings
         self.hints = hints
         self.sp_char = sp_char
-       
+
     def create_new_book(self):
         db.session.add(self)
 
     @classmethod
     def get_kanji(cls):
-        return cls.query.order_by(
-            func.random()
-        ).first()
-    
+        return cls.query.order_by(func.random()).first()
+
     @classmethod
     def select_kanji_by_id(cls, id):
         return cls.query.get(id)
-    
+
     @classmethod
     def select_kanji_info_by_kanji(cls, kanji):
         return cls.query.filter_by(kanji=kanji).first()
-    
+
     @classmethod
     def delete_kanji(cls, kanji):
         cls.query.filter_by(kanji=kanji).delete()
