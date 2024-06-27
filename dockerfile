@@ -1,4 +1,4 @@
-FROM python:3.11.1
+FROM python:3.11.1-slim
 
 WORKDIR /app
 
@@ -13,4 +13,4 @@ RUN chmod +x /entrypoint.sh
 ENV FLASK_APP=setup.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
-ENTRYPOINT [ "entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
