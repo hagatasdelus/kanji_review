@@ -1,35 +1,36 @@
-# クイズ型漢字復習App
-## 概要
-漢字をクイズ形式で復習するためのアプリケーションです。
-使いたい場合は各自ホストしてください。
-## 特徴
-- 漢字復習クイズ
-- 漢字のDBへの登録・削除
-- 登録漢字の検索・確認
-- クイズの設定
+# Quiz-style Kanji Review App
+## Overview
+This is an application for reviewing kanji characters in a quiz format.
+If you want to use it, please host it yourself.
 
-## セットアップと起動方法
-### 前提条件
+## Features
+- Kanji review quiz
+- Registration and deletion of kanji in the database
+- Search and confirmation of registered kanji
+- Quiz settings
+
+## Setup and Launch Instructions
+### Prerequisites
 - Docker
 - Docker Compose
 
-### ビルド
+### Build
 ```
 docker compose build
 ```
-### 初回起動
+### First Launch
 ```
 docker compose up
 ```
-### 再起動
+### Restart
 ```
 docker compose restart
 ```
-### 停止
+### Stop
 ```
 docker compose stop
 ```
-### 全停止(削除)
+### Complete Shutdown (Removal)
 ```
 docker compose down
 ```
