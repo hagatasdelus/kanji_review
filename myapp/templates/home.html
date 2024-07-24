@@ -3,13 +3,13 @@
 ホーム - {{ super() }}
 {% endblock %}
 {% block content %}
-{% for message in get_flashed_messages() %}
-{{ message }}
-{% endfor %}
 <div class="row">
     <div class="col-lg-12 offset-lg-2">
         <h2>メインページ</h2>
         <ul>
+            {% for message in get_flashed_messages() %}
+            {{ message }}
+            {% endfor %}
             <h5>
                 <li>「問題」から登録されている漢字の復習ができます。</li>
                 <li>「登録&削除」から漢字の登録及び削除が可能です。</li>
