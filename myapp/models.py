@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 
-from flaskr import db
+from myapp import db
 from sqlalchemy import func
 
 
