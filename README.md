@@ -21,6 +21,8 @@ docker compose build
 ### First Launch
 ```
 docker compose up
+or
+docker compose up -d
 ```
 ### Restart
 ```
